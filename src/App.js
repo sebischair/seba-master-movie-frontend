@@ -1,25 +1,54 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect } from "react";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { Provider } from "react-redux";
+import { createStore, applyMiddleware } from "redux";
+import thunkMiddleware from "redux-thunk";
+import {
+    MuiThemeProvider,
+    createMuiTheme,
+    makeStyles,
+} from "@material-ui/core/styles";
+import CssBaseline from "@material-ui/core/CssBaseline";
+
+import reducers from "./redux/reducers";
+import routes from "./routes";
+import Header from "./components/Header";
+
+const useStyles = makeStyles((theme) => ({
+    appRoot: {
+        height: "100vh",
+        display: "flex",
+        flexDirection: "column",
+    },
+}));
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    const classes = useStyles();
+
+    const theme = createMuiTheme({});
+    const store = createStore(reducers, applyMiddleware(thunkMiddleware));
+
+    useEffect(() => {
+        document.title = "Movie Example App";
+    }, []);
+
+    return (
+        <div className={classes.appRoot}>
+            <MuiThemeProvider theme={theme}>
+                <Provider store={store}>
+                    <CssBaseline />
+                    <React.Fragment>
+                        <Header />
+                        <Switch>
+                            {routes.map((route, i) => (
+                                <Route key={i} {...route} />
+                            ))}
+                        </Switch>
+                    </React.Fragment>
+                </Provider>
+            </MuiThemeProvider>
+        </div>
+    );
 }
 
 export default App;

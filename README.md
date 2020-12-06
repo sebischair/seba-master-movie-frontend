@@ -1,70 +1,75 @@
-# Getting Started with Create React App
+# sebamaster-movie-frontend application
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Movies example application based on React. Backend can be found [here](https://github.com/sebischair/sebamaster-movie-backend)
 
-## Available Scripts
+## Prerequisites
 
-In the project directory, you can run:
+Both for the front end and the back end check:
 
-### `npm start`
+-   nodejs [official website](https://nodejs.org/en/) - nodejs includes [npm](https://www.npmjs.com/) (node package manager)
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## Getting Started
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+To get you started you can simply clone the [sebamaster-movie-frontend](https://github.com/sebischair/sebamaster-movie-frontend/) repository and install all its dependencies:
 
-### `npm test`
+### Prerequisites
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+You need git to clone the [sebamaster-movie-frontend](https://github.com/sebischair/sebamaster-movie-frontend/) repository. You can get git from [http://git-scm.com/](http://git-scm.com/).
 
-### `npm run build`
+We also use a number of node.js tools to initialize and test [sebamaster-movie-frontend](https://github.com/sebischair/sebamaster-movie-frontend/) . You must have node.js and its package manager (npm) installed. You can get them from [http://nodejs.org/](http://nodejs.org/).
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### Clone Movie Project
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+Clone the [sebamaster-movie-frontend](https://github.com/sebischair/sebamaster-movie-frontend/) repository using [git](http://git-scm.com/):
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+```
+git clone https://github.com/sebischair/sebamaster-movie-frontend.git
+cd sebamaster-movie-frontend
+```
 
-### `npm run eject`
+If you just want to start a new project without the [sebamaster-movie-frontend](https://github.com/sebischair/sebamaster-movie-frontend/) commit history then you can do:
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+```bash
+git clone --depth=1 https://github.com/sebischair/sebamaster-movie-frontend.git <your-project-name>
+```
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+The `depth=1` tells git to only pull down one commit worth of historical data.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+In case you would like to try the application without a server you can use the branch <severless>
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+```bash
+git clone -b serverless --depth=1 https://github.com/sebischair/sebamaster-movie-frontend.git <your-project-name>
+```
 
-## Learn More
+### Install Dependencies
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+We get the tools we depend upon via `npm`, the [node package manager](https://www.npmjs.com).
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+```
+npm install
+```
 
-### Code Splitting
+### Create a Bundle for the Application
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+This project use [webpack](https://github.com/webpack/webpack) version 1 for creating a bundle of the application and its dependencies
 
-### Analyzing the Bundle Size
+We have pre-configured `npm` to automatically run `webpack` so we can simply do:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+```
+npm run build
+```
 
-### Making a Progressive Web App
+Behind the scenes this will call `webpack --config webpack.config.js `. After, you should find that you have one new folder in your project.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+-   `dist` - contains all the files of your application and their dependencies.
 
-### Advanced Configuration
+### Run the Application
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+We have preconfigured the project with a simple development web server. The simplest way to start
+this server is:
 
-### Deployment
+```
+npm start
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Now browse to the app at `http://localhost:8000/index.html`.
