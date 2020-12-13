@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { makeStyles } from "@material-ui/core/styles";
 import { Typography } from "@material-ui/core";
 import CustomTextField from "../components/CustomTextField";
@@ -28,32 +29,29 @@ function CustomChip(props) {
 
     return (
         <div className={classes.flexCol + " " + classes.customChip}>
-            {Array.isArray(props.content) ? (
-                props.content.map((elem) => (
-                    <CustomTextField
-                        value={elem.value}
-                        suffix={props.suffix}
-                        editMode={props.editMode}
-                        align="center"
-                        onChange={(value) => props.onChange(value, elem.type)}
-                        variant="h6"
-                    />
-                ))
-            ) : (
-                <CustomTextField
-                    value={props.content}
-                    suffix={props.suffix}
-                    editMode={props.editMode}
-                    align="center"
-                    onChange={props.onChange}
-                    variant="h6"
-                />
-            )}
+            <CustomTextField
+                value={props.content}
+                suffix={props.suffix}
+                editMode={props.editMode}
+                align="center"
+                onChange={props.onChange}
+                variant="h6"
+            />
             <Typography variant="caption" align="center">
                 {props.caption}
             </Typography>
         </div>
     );
 }
+
+// attributes of props and their type
+CustomChip.propTypes = {
+    suffix: PropTypes.string,
+    editMode: PropTypes.bool,
+    onChange: PropTypes.func,
+    content: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
+        .isRequired,
+    caption: PropTypes.string.isRequired,
+};
 
 export default CustomChip;

@@ -13,6 +13,7 @@ import {
     TableRow,
     Typography,
 } from "@material-ui/core";
+import PropTypes from "prop-types";
 import ImageIcon from "@material-ui/icons/Image";
 import DeleteIcon from "@material-ui/icons/Delete";
 
@@ -130,5 +131,14 @@ function MovieListComponent(props) {
         </div>
     );
 }
+
+// attributes of props and their type
+MovieListComponent.propTypes = {
+    onAddMovie: PropTypes.func.isRequired,
+    onClickDeleteMovie: PropTypes.func.isRequired,
+    onClickDisplayMovie: PropTypes.func.isRequired,
+    isLoggedIn: PropTypes.bool,
+    movies: PropTypes.array,
+};
 
 export default MovieListComponent;

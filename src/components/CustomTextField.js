@@ -1,5 +1,5 @@
 import React from "react";
-
+import PropTypes from "prop-types";
 import { makeStyles } from "@material-ui/core/styles";
 import { TextField } from "@material-ui/core";
 
@@ -33,7 +33,9 @@ function CustomTextField(props) {
                     ? props.value
                     : props.value + (props.suffix ? " " + props.suffix : "")
             }
-            onChange={(e) => props.onChange(e.target.value)}
+            onChange={(e) =>
+                props.onChange ? props.onChange(e.target.value) : null
+            }
             disabled={!props.editMode}
             variant={props.editMode ? "outlined" : "standard"}
             InputProps={{
@@ -47,5 +49,15 @@ function CustomTextField(props) {
         />
     );
 }
+
+// attributes of props and their type
+CustomTextField.propTypes = {
+    align: PropTypes.string,
+    variant: PropTypes.string,
+    editMode: PropTypes.bool,
+    value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+    onChange: PropTypes.func,
+    furtherProps: PropTypes.any,
+};
 
 export default CustomTextField;

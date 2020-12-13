@@ -8,6 +8,7 @@ import {
     TableCell,
     TableRow,
 } from "@material-ui/core";
+import PropTypes from "prop-types";
 import CustomTextField from "../components/CustomTextField";
 import CustomChip from "../components/CustomChip";
 import DetailsArea from "../components/DetailsArea";
@@ -483,6 +484,14 @@ function MovieDetailsComponent(props) {
         </div>
     );
 }
+
+// attributes of props and their type
+MovieDetailsComponent.propTypes = {
+    movie: PropTypes.object,
+    new: PropTypes.bool,
+    onCreate: PropTypes.func,
+    onSave: PropTypes.func,
+};
 
 // withRouter() allows accsing the necessary functionality to navigate from this component
 export default withRouter(MovieDetailsComponent);

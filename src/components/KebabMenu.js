@@ -1,6 +1,6 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { withRouter } from "react-router-dom";
-
 import { logout } from "../redux/actions";
 import { Menu, MenuItem } from "@material-ui/core";
 import { connect, useSelector } from "react-redux";
@@ -50,5 +50,12 @@ function KebabMenu(props) {
         </Menu>
     );
 }
+
+// attributes of props and their type
+KebabMenu.propTypes = {
+    onClose: PropTypes.func.isRequired,
+    anchor: PropTypes.element,
+    open: PropTypes.bool.isRequired,
+};
 
 export default connect()(withRouter(KebabMenu));

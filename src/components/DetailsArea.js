@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { makeStyles } from "@material-ui/core/styles";
 import { Typography, Paper } from "@material-ui/core";
 
@@ -26,5 +27,11 @@ function DetailsArea(props) {
         </Paper>
     );
 }
+
+// attributes of props and their type
+DetailsArea.propTypes = {
+    content: PropTypes.object.isRequired,
+    title: PropTypes.string.isRequired,
+};
 
 export default DetailsArea;

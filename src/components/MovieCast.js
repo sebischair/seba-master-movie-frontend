@@ -7,6 +7,7 @@ import {
     TableContainer,
     TableRow,
 } from "@material-ui/core";
+import PropTypes from "prop-types";
 import CustomTextField from "../components/CustomTextField";
 import { Add, Delete, Edit } from "@material-ui/icons";
 
@@ -119,5 +120,15 @@ function MovieCast(props) {
         </TableContainer>
     );
 }
+
+// attributes of props and their type
+MovieCast.propTypes = {
+    movieCast: PropTypes.array,
+    editMode: PropTypes.bool,
+    onAddCastMember: PropTypes.func.isRequired,
+    onRemoveCastMember: PropTypes.func.isRequired,
+    isLoggedIn: PropTypes.bool,
+    toggleEditMode: PropTypes.func.isRequired,
+};
 
 export default MovieCast;
