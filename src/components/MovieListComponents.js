@@ -81,13 +81,13 @@ function MovieListComponent(props) {
                                 <TableRow
                                     key={index}
                                     onClick={() =>
-                                        props.onClickDisplayMovie(movie.id)
+                                        props.onClickDisplayMovie(movie._id)
                                     }
                                 >
                                     <TableCell>
-                                        {movie.thumbnail ? (
+                                        {movie.posters ? (
                                             <img
-                                                src={movie.thumbnail}
+                                                src={movie.posters.thumbnail}
                                                 alt="Movie Thumbnail"
                                             />
                                         ) : (
@@ -104,7 +104,7 @@ function MovieListComponent(props) {
                                             onClick={(e) => {
                                                 e.stopPropagation();
                                                 props.onClickDeleteMovie(
-                                                    movie.id
+                                                    movie._id
                                                 );
                                             }}
                                             disabled={!props.isLoggedIn}
