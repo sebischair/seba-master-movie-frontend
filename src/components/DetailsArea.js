@@ -11,6 +11,10 @@ const useStyles = makeStyles((theme) => ({
     padding: {
         padding: theme.spacing(2),
     },
+    border: {
+        borderStyle: "solid",
+        borderColor: theme.palette.primary.main,
+    },
 }));
 
 /**
@@ -21,7 +25,11 @@ function DetailsArea(props) {
     const classes = useStyles();
 
     return (
-        <Paper className={classes.flexCol + " " + classes.padding}>
+        <Paper
+            className={
+                classes.flexCol + " " + classes.padding + " " + classes.border
+            }
+        >
             <Typography variant="h5">{props.title}</Typography>
             <div className={classes.padding}>{props.content}</div>
         </Paper>

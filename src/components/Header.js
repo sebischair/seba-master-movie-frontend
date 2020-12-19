@@ -28,7 +28,7 @@ function Header(props) {
     const [menuAnchor, setMenuAnchor] = React.useState(null);
 
     return (
-        <AppBar position="static">
+        <AppBar position="sticky">
             <KebabMenu
                 open={Boolean(menuAnchor)}
                 anchor={menuAnchor}

@@ -296,24 +296,6 @@ function MovieDetailsComponent(props) {
 
             {/* More detail data of the movie, grouped in DetailsArea.js for a consistent look */}
             <Grid container>
-                {/* Synopsis */}
-                <Grid xl={6} lg={6} md={6} ms={12} xs={12} {...girdItemProps}>
-                    <DetailsArea
-                        title="Synopsis"
-                        content={
-                            <CustomTextField
-                                value={movieSynopsis}
-                                editMode={editMode}
-                                furtherProps={{
-                                    multiline: true,
-                                    fullWidth: true,
-                                }}
-                                onChange={onChangeSynopsis}
-                            />
-                        }
-                    />
-                </Grid>
-
                 {/* Ratings */}
                 <Grid xl={6} lg={6} md={6} ms={12} xs={12} {...girdItemProps}>
                     <DetailsArea
@@ -460,6 +442,24 @@ function MovieDetailsComponent(props) {
                                     </TableRow>
                                 </TableBody>
                             </Table>
+                        }
+                    />
+                </Grid>
+
+                {/* Synopsis */}
+                <Grid xl={6} lg={6} md={6} ms={12} xs={12} {...girdItemProps}>
+                    <DetailsArea
+                        title="Synopsis"
+                        content={
+                            <CustomTextField
+                                value={movieSynopsis}
+                                editMode={editMode}
+                                furtherProps={{
+                                    multiline: true,
+                                    fullWidth: true,
+                                }}
+                                onChange={onChangeSynopsis}
+                            />
                         }
                     />
                 </Grid>

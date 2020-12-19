@@ -13,6 +13,7 @@ import CssBaseline from "@material-ui/core/CssBaseline";
 import reducers from "./redux/reducers";
 import routes from "./routes";
 import Header from "./components/Header";
+import Footer from "./components/Footer";
 
 const useStyles = makeStyles((theme) => ({
     appRoot: {
@@ -44,6 +45,7 @@ function App() {
                                 <Route key={i} {...route} />
                             ))}
                         </Switch>
+                        <Footer />
                     </React.Fragment>
                 </Provider>
             </MuiThemeProvider>
