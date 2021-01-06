@@ -15,6 +15,7 @@ export default class HttpService {
             user: {
                 _id: userJson._id,
                 username: userJson.username,
+                role: userJson.role,
             },
         };
     }

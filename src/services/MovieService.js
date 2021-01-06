@@ -70,6 +70,21 @@ export default class MovieService {
         });
     }
 
+    static rateMovie(movieId, rating) {
+        return new Promise((resolve, reject) => {
+            HttpService.put(
+                `${this.baseURL()}/rate/${movieId}`,
+                { rating: rating },
+                function (data) {
+                    resolve(data);
+                },
+                function (textStatus) {
+                    reject(textStatus);
+                }
+            );
+        });
+    }
+
     static createMovie(movie) {
         movie.id = Math.floor(Math.random() * 100000000 + 1).toString();
         movie.posters = {

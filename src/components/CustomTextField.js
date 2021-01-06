@@ -1,7 +1,14 @@
-import React from "react";
+import React, { useEffect } from "react";
 import PropTypes from "prop-types";
 import { makeStyles } from "@material-ui/core/styles";
-import { TextField } from "@material-ui/core";
+import { TextField, Typography } from "@material-ui/core";
+import DateFnsUtils from "@date-io/date-fns";
+import {
+    MuiPickersUtilsProvider,
+    KeyboardTimePicker,
+    KeyboardDatePicker,
+} from "@material-ui/pickers";
+import TodayIcon from "@material-ui/icons/Today";
 
 /**
  * component for changing movie attributes at the same place where they are displayed
@@ -26,7 +33,7 @@ function CustomTextField(props) {
 
     const classes = useStyles();
 
-    return (
+    return props.type !== "date" ? (
         <TextField
             value={
                 props.editMode
@@ -47,6 +54,34 @@ function CustomTextField(props) {
             }}
             {...props.furtherProps}
         />
+    ) : (props.value === "" || !props.value) && !props.editMode ? (
+        <Typography>{props.isEmptyText}</Typography>
+    ) : (
+        <MuiPickersUtilsProvider utils={DateFnsUtils}>
+            <KeyboardDatePicker
+                format="dd.MM.yyyy"
+                value={props.value}
+                readOnly={!props.editMode}
+                keyboardIcon={props.editMode ? <TodayIcon /> : null}
+                variant={props.editMode ? "outlined" : "standard"}
+                InputProps={{
+                    className: classes.inputBase,
+                    disableUnderline: true,
+                }}
+                inputProps={{
+                    className: classes.input,
+                }}
+                {...props.furtherProps}
+                onChange={(date) =>
+                    props.onChange ? props.onChange(date) : null
+                }
+                invalidDateMessage=""
+                //onChange={onChangeDate}
+                KeyboardButtonProps={{
+                    "aria-label": "change date",
+                }}
+            />
+        </MuiPickersUtilsProvider>
     );
 }
 

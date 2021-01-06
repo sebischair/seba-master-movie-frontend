@@ -8,12 +8,14 @@ import {
     TableCell,
     TableRow,
 } from "@material-ui/core";
+import { Rating } from "@material-ui/lab";
 import PropTypes from "prop-types";
 import CustomTextField from "../components/CustomTextField";
 import CustomChip from "../components/CustomChip";
 import DetailsArea from "../components/DetailsArea";
 import MovieCast from "./MovieCast";
 import { withRouter } from "react-router-dom";
+import MovieService from "../services/MovieService";
 
 const useStyles = makeStyles((theme) => ({
     flexCol: {
@@ -69,47 +71,50 @@ function MovieDetailsComponent(props) {
     const [movieRuntime, setMovieRuntime] = React.useState("");
     const [movieYear, setMovieYear] = React.useState("");
     const [criticsRating, setCriticsRating] = React.useState("");
-    const [criticsScore, setCriticsScore] = React.useState("");
-    const [audienceRating, setAudienceRating] = React.useState("");
-    const [audienceScore, setAudienceScore] = React.useState("");
+    const [avgAudienceRating, setAvgAudienceRating] = React.useState("");
+    const [ownRating, setOwnRating] = React.useState("");
     const [theaterRelease, setTheaterRelease] = React.useState("");
-    const [dvdRelease, setDvdRelease] = React.useState("");
+    const [blurayRelase, setBlurayRelease] = React.useState("");
 
     // for extracting the attributes of the given movie to the approriate state variables
     const extractMovie = () => {
         if (!props.movie) {
             return;
         }
+
+        console.log(props.movie);
+
         setMovieTitle(props.movie.title);
         setMovieSynopsis(props.movie.synopsis);
-        setMovieCast(JSON.parse(JSON.stringify(props.movie.actors)));
         setMovieAgeRating(props.movie.mpaa_rating);
         setMovieRuntime(props.movie.runtime);
+
+        setMovieCast(JSON.parse(JSON.stringify(props.movie.actors)));
+        setCriticsRating(props.movie.criticsRating);
+        setAvgAudienceRating(props.movie.avgAudienceRating);
+        setOwnRating(props.movie.ownRating);
+        setTheaterRelease(props.movie.theaterRelease);
+        setBlurayRelease(props.movie.blurayRelease);
         setMovieYear(props.movie.year);
-        setCriticsRating(props.movie.ratings.critics_rating);
-        setCriticsScore(props.movie.ratings.critics_score);
-        setAudienceRating(props.movie.ratings.audience_rating);
-        setAudienceScore(props.movie.ratings.audience_score);
-        setTheaterRelease(props.movie.release_dates.theater);
-        setDvdRelease(props.movie.release_dates.dvd);
     };
 
     // creating a object with all relevant data to update or create a changed movie
     const packMovie = () => {
-        let back = { ratings: {}, release_dates: {}, ...props.movie };
+        let back = {
+            ...props.movie,
+        };
 
         back.title = movieTitle;
         back.synopsis = movieSynopsis;
-        back.actors = movieCast;
-        back.mpaa_rating = movieAgeRating;
         back.runtime = movieRuntime;
-        back.year = movieYear;
-        back.ratings.critics_rating = criticsRating;
-        back.ratings.critics_score = criticsScore;
-        back.ratings.audience_rating = audienceRating;
-        back.ratings.audience_score = audienceScore;
-        back.release_dates.theater = theaterRelease;
-        back.release_dates.dvd = dvdRelease;
+        back.mpaa_rating = movieAgeRating;
+
+        // CHANGED
+        back.theaterRelease = theaterRelease;
+        back.blurayRelease = blurayRelase;
+        back.criticsRating = criticsRating;
+        back.actors = movieCast;
+
         return back;
     };
 
@@ -157,6 +162,11 @@ function MovieDetailsComponent(props) {
 
     const onChangeYear = (value) => {
         setMovieYear(value);
+    };
+
+    const onChangeOwnRating = (value) => {
+        console.log(window.localStorage["jwtToken"]);
+        MovieService.rateMovie(props.movie._id, value);
     };
 
     const toggleEditMode = () => {
@@ -280,8 +290,7 @@ function MovieDetailsComponent(props) {
                     <CustomChip
                         content={movieYear}
                         caption="Year"
-                        editMode={editMode}
-                        onChange={onChangeYear}
+                        editMode={false}
                     />
                 </Grid>
                 <Grid {...girdItemProps}>
@@ -304,50 +313,16 @@ function MovieDetailsComponent(props) {
                             <Table>
                                 <TableBody>
                                     <TableRow>
-                                        <TableCell>Audience</TableCell>
-                                        <TableCell>
-                                            <CustomTextField
-                                                value={
-                                                    audienceRating
-                                                        ? audienceRating
-                                                        : ""
-                                                }
-                                                suffix={
-                                                    !audienceRating ||
-                                                    audienceRating === ""
-                                                        ? "No Audience Rating"
-                                                        : ""
-                                                }
-                                                editMode={editMode}
-                                                onChange={(value) =>
-                                                    setAudienceRating(value)
-                                                }
-                                            />
-                                        </TableCell>
-                                        <TableCell>
-                                            <CustomTextField
-                                                value={
-                                                    audienceScore
-                                                        ? audienceScore
-                                                        : ""
-                                                }
-                                                suffix={
-                                                    !audienceScore ||
-                                                    audienceScore === ""
-                                                        ? "No Audience Score"
-                                                        : ""
-                                                }
-                                                editMode={editMode}
-                                                onChange={(value) =>
-                                                    setAudienceScore(value)
-                                                }
-                                            />
-                                        </TableCell>
-                                    </TableRow>
-                                    <TableRow>
                                         <TableCell>Critics</TableCell>
                                         <TableCell>
-                                            <CustomTextField
+                                            <Rating
+                                                value={criticsRating}
+                                                onChange={(e, value) =>
+                                                    setCriticsRating(value)
+                                                }
+                                                name="critics-rating"
+                                            />
+                                            {/* <CustomTextField
                                                 value={
                                                     criticsRating
                                                         ? criticsRating
@@ -363,9 +338,9 @@ function MovieDetailsComponent(props) {
                                                 onChange={(value) =>
                                                     setCriticsRating(value)
                                                 }
-                                            />
+                                            /> */}
                                         </TableCell>
-                                        <TableCell>
+                                        {/* <TableCell>
                                             <CustomTextField
                                                 value={
                                                     criticsScore
@@ -383,7 +358,56 @@ function MovieDetailsComponent(props) {
                                                     setCriticsScore(value)
                                                 }
                                             />
+                                        </TableCell> */}
+                                    </TableRow>
+
+                                    <TableRow>
+                                        <TableCell>Audience</TableCell>
+                                        <TableCell>
+                                            <Rating
+                                                value={avgAudienceRating}
+                                                onChange={(e, value) =>
+                                                    onChangeOwnRating(value)
+                                                }
+                                                name="audience-rating"
+                                            />
+                                            {/* <CustomTextField
+                                                value={
+                                                    avgAudienceRating
+                                                        ? avgAudienceRating
+                                                        : ""
+                                                }
+                                                suffix={
+                                                    !avgAudienceRating ||
+                                                    avgAudienceRating === ""
+                                                        ? "No Audience Rating"
+                                                        : ""
+                                                }
+                                                editMode={editMode}
+                                                onChange={(value) =>
+                                                    setAvgAudienceRating(value)
+                                                }
+                                            /> */}
                                         </TableCell>
+                                        {/* <TableCell>
+                                            <CustomTextField
+                                                value={
+                                                    audienceScore
+                                                        ? audienceScore
+                                                        : ""
+                                                }
+                                                suffix={
+                                                    !audienceScore ||
+                                                    audienceScore === ""
+                                                        ? "No Audience Score"
+                                                        : ""
+                                                }
+                                                editMode={editMode}
+                                                onChange={(value) =>
+                                                    setAudienceScore(value)
+                                                }
+                                            />
+                                        </TableCell> */}
                                     </TableRow>
                                 </TableBody>
                             </Table>
@@ -402,15 +426,11 @@ function MovieDetailsComponent(props) {
                                         <TableCell>Theater</TableCell>
                                         <TableCell>
                                             <CustomTextField
+                                                type="date"
+                                                isEmptyText="No Theater Release"
                                                 value={
                                                     theaterRelease
                                                         ? theaterRelease
-                                                        : ""
-                                                }
-                                                suffix={
-                                                    !theaterRelease ||
-                                                    theaterRelease === ""
-                                                        ? "No Theater Release"
                                                         : ""
                                                 }
                                                 editMode={editMode}
@@ -421,21 +441,19 @@ function MovieDetailsComponent(props) {
                                         </TableCell>
                                     </TableRow>
                                     <TableRow>
-                                        <TableCell>DVD</TableCell>
+                                        <TableCell>Blu-Ray</TableCell>
                                         <TableCell>
                                             <CustomTextField
+                                                type="date"
+                                                isEmptyText="No Bluray Release"
                                                 value={
-                                                    dvdRelease ? dvdRelease : ""
-                                                }
-                                                suffix={
-                                                    !dvdRelease ||
-                                                    dvdRelease === ""
-                                                        ? "No DVD Release"
+                                                    blurayRelase
+                                                        ? blurayRelase
                                                         : ""
                                                 }
                                                 editMode={editMode}
                                                 onChange={(value) =>
-                                                    setDvdRelease(value)
+                                                    setBlurayRelease(value)
                                                 }
                                             />
                                         </TableCell>
