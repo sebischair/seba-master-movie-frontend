@@ -16,6 +16,8 @@ import DetailsArea from "../components/DetailsArea";
 import MovieCast from "./MovieCast";
 import { withRouter } from "react-router-dom";
 import MovieService from "../services/MovieService";
+import ReleaseDates from "./ReleaseDates";
+import Ratings from "./Ratings";
 
 const useStyles = makeStyles((theme) => ({
     flexCol: {
@@ -109,7 +111,6 @@ function MovieDetailsComponent(props) {
         back.runtime = movieRuntime;
         back.mpaa_rating = movieAgeRating;
 
-        // CHANGED
         back.theaterRelease = theaterRelease;
         back.blurayRelease = blurayRelase;
         back.criticsRating = criticsRating;
@@ -160,13 +161,12 @@ function MovieDetailsComponent(props) {
         setMovieAgeRating(value);
     };
 
-    const onChangeYear = (value) => {
-        setMovieYear(value);
-    };
-
-    const onChangeOwnRating = (value) => {
-        console.log(window.localStorage["jwtToken"]);
-        MovieService.rateMovie(props.movie._id, value);
+    const onChangeOwnRating = async (value) => {
+        await MovieService.rateMovie(props.movie._id, value);
+        let newAvgAudienceRating = await MovieService.getRating(
+            props.movie._id
+        );
+        setAvgAudienceRating(newAvgAudienceRating.rating);
     };
 
     const toggleEditMode = () => {
@@ -310,107 +310,55 @@ function MovieDetailsComponent(props) {
                     <DetailsArea
                         title="Ratings"
                         content={
-                            <Table>
-                                <TableBody>
-                                    <TableRow>
-                                        <TableCell>Critics</TableCell>
-                                        <TableCell>
-                                            <Rating
-                                                value={criticsRating}
-                                                onChange={(e, value) =>
-                                                    setCriticsRating(value)
-                                                }
-                                                name="critics-rating"
-                                            />
-                                            {/* <CustomTextField
-                                                value={
-                                                    criticsRating
-                                                        ? criticsRating
-                                                        : ""
-                                                }
-                                                suffix={
-                                                    !criticsRating ||
-                                                    criticsRating === ""
-                                                        ? "No Critics Rating"
-                                                        : ""
-                                                }
-                                                editMode={editMode}
-                                                onChange={(value) =>
-                                                    setCriticsRating(value)
-                                                }
-                                            /> */}
-                                        </TableCell>
-                                        {/* <TableCell>
-                                            <CustomTextField
-                                                value={
-                                                    criticsScore
-                                                        ? criticsScore
-                                                        : ""
-                                                }
-                                                suffix={
-                                                    !criticsScore ||
-                                                    criticsScore === ""
-                                                        ? "No Critics Score"
-                                                        : ""
-                                                }
-                                                editMode={editMode}
-                                                onChange={(value) =>
-                                                    setCriticsScore(value)
-                                                }
-                                            />
-                                        </TableCell> */}
-                                    </TableRow>
+                            <Ratings
+                                criticsRating={
+                                    typeof criticsRating === "number"
+                                        ? criticsRating
+                                        : 0
+                                }
+                                avgAudienceRating={
+                                    typeof avgAudienceRating === "number"
+                                        ? avgAudienceRating
+                                        : 0
+                                }
+                                editMode={editMode}
+                                onChangeCriticsRating={(value) =>
+                                    setCriticsRating(value)
+                                }
+                                onChangeOwnRating={(value) =>
+                                    onChangeOwnRating(value)
+                                }
+                            />
 
-                                    <TableRow>
-                                        <TableCell>Audience</TableCell>
-                                        <TableCell>
-                                            <Rating
-                                                value={avgAudienceRating}
-                                                onChange={(e, value) =>
-                                                    onChangeOwnRating(value)
-                                                }
-                                                name="audience-rating"
-                                            />
-                                            {/* <CustomTextField
-                                                value={
-                                                    avgAudienceRating
-                                                        ? avgAudienceRating
-                                                        : ""
-                                                }
-                                                suffix={
-                                                    !avgAudienceRating ||
-                                                    avgAudienceRating === ""
-                                                        ? "No Audience Rating"
-                                                        : ""
-                                                }
-                                                editMode={editMode}
-                                                onChange={(value) =>
-                                                    setAvgAudienceRating(value)
-                                                }
-                                            /> */}
-                                        </TableCell>
-                                        {/* <TableCell>
-                                            <CustomTextField
-                                                value={
-                                                    audienceScore
-                                                        ? audienceScore
-                                                        : ""
-                                                }
-                                                suffix={
-                                                    !audienceScore ||
-                                                    audienceScore === ""
-                                                        ? "No Audience Score"
-                                                        : ""
-                                                }
-                                                editMode={editMode}
-                                                onChange={(value) =>
-                                                    setAudienceScore(value)
-                                                }
-                                            />
-                                        </TableCell> */}
-                                    </TableRow>
-                                </TableBody>
-                            </Table>
+                            // <Table>
+                            //     <TableBody>
+                            //         <TableRow>
+                            //             <TableCell>Critics</TableCell>
+                            //             <TableCell>
+                            //                 <Rating
+                            //                     value={criticsRating}
+                            //                     onChange={(e, value) =>
+                            //                         setCriticsRating(value)
+                            //                     }
+                            //                     name="critics-rating"
+                            //                 />
+                            //             </TableCell>
+                            //         </TableRow>
+
+                            //         <TableRow>
+                            //             <TableCell>Audience</TableCell>
+                            //             <TableCell>
+                            //                 <Rating
+                            //                     value={avgAudienceRating}
+                            //                     onChange={(e, value) =>
+                            //                         onChangeOwnRating(value)
+                            //                     }
+                            //                     name="audience-rating"
+                            //                 />
+                            //             </TableCell>
+                            //         </TableRow>
+                            //     </TableBody>
+                            // </Table>
                         }
                     />
                 </Grid>
@@ -420,46 +368,17 @@ function MovieDetailsComponent(props) {
                     <DetailsArea
                         title="Release Dates"
                         content={
-                            <Table>
-                                <TableBody>
-                                    <TableRow>
-                                        <TableCell>Theater</TableCell>
-                                        <TableCell>
-                                            <CustomTextField
-                                                type="date"
-                                                isEmptyText="No Theater Release"
-                                                value={
-                                                    theaterRelease
-                                                        ? theaterRelease
-                                                        : ""
-                                                }
-                                                editMode={editMode}
-                                                onChange={(value) =>
-                                                    setTheaterRelease(value)
-                                                }
-                                            />
-                                        </TableCell>
-                                    </TableRow>
-                                    <TableRow>
-                                        <TableCell>Blu-Ray</TableCell>
-                                        <TableCell>
-                                            <CustomTextField
-                                                type="date"
-                                                isEmptyText="No Bluray Release"
-                                                value={
-                                                    blurayRelase
-                                                        ? blurayRelase
-                                                        : ""
-                                                }
-                                                editMode={editMode}
-                                                onChange={(value) =>
-                                                    setBlurayRelease(value)
-                                                }
-                                            />
-                                        </TableCell>
-                                    </TableRow>
-                                </TableBody>
-                            </Table>
+                            <ReleaseDates
+                                theaterRelease={theaterRelease}
+                                blurayRelase={blurayRelase}
+                                editMode={editMode}
+                                onChangeTheaterRelease={(value) =>
+                                    setTheaterRelease(value)
+                                }
+                                onChangeBlurayRelease={(value) =>
+                                    setBlurayRelease(value)
+                                }
+                            />
                         }
                     />
                 </Grid>

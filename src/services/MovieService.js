@@ -70,6 +70,20 @@ export default class MovieService {
         });
     }
 
+    static getRating(movieId) {
+        return new Promise((resolve, reject) => {
+            HttpService.get(
+                `${this.baseURL()}/rate/${movieId}`,
+                function (data) {
+                    resolve(data);
+                },
+                function (textStatus) {
+                    reject(textStatus);
+                }
+            );
+        });
+    }
+
     static rateMovie(movieId, rating) {
         return new Promise((resolve, reject) => {
             HttpService.put(
