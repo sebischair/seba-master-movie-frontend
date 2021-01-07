@@ -228,37 +228,39 @@ function MovieDetailsComponent(props) {
                     classes.barMinHeight
                 }
             >
-                {editMode ? (
-                    <React.Fragment>
+                {props.isAdmin ? (
+                    editMode ? (
+                        <React.Fragment>
+                            <Button
+                                onClick={onCancel}
+                                variant="contained"
+                                color="primary"
+                                className={classes.marginSides}
+                            >
+                                Cancel
+                            </Button>
+                            <Button
+                                onClick={onSave}
+                                variant="contained"
+                                color="primary"
+                                className={classes.marginSides}
+                                disabled={props.new && movieTitle === ""}
+                            >
+                                {props.new ? "Create" : "Save"}
+                            </Button>
+                        </React.Fragment>
+                    ) : (
                         <Button
-                            onClick={onCancel}
+                            onClick={(e) => setEditMode(true)}
                             variant="contained"
                             color="primary"
                             className={classes.marginSides}
+                            disabled={!props.isLoggedIn}
                         >
-                            Cancel
+                            Edit
                         </Button>
-                        <Button
-                            onClick={onSave}
-                            variant="contained"
-                            color="primary"
-                            className={classes.marginSides}
-                            disabled={props.new && movieTitle === ""}
-                        >
-                            {props.new ? "Create" : "Save"}
-                        </Button>
-                    </React.Fragment>
-                ) : (
-                    <Button
-                        onClick={(e) => setEditMode(true)}
-                        variant="contained"
-                        color="primary"
-                        className={classes.marginSides}
-                        disabled={!props.isLoggedIn}
-                    >
-                        Edit
-                    </Button>
-                )}
+                    )
+                ) : null}
             </div>
 
             {/* Movie Title */}

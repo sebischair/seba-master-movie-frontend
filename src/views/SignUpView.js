@@ -1,7 +1,14 @@
 import React, { useEffect } from "react";
 import { withRouter } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
-import { Paper, Button, TextField, Typography } from "@material-ui/core";
+import {
+    Paper,
+    Button,
+    TextField,
+    Typography,
+    FormControlLabel,
+    Checkbox,
+} from "@material-ui/core";
 import { connect, useSelector } from "react-redux";
 
 import { register } from "../redux/actions";
@@ -43,6 +50,7 @@ function SignUpView(props) {
     const [username, setUsername] = React.useState("");
     const [password, setPassword] = React.useState("");
     const [password2, setPassword2] = React.useState("");
+    const [isAdmin, setIsAdmin] = React.useState(false);
 
     const [registerError, setRegisterError] = React.useState("");
 
@@ -59,8 +67,9 @@ function SignUpView(props) {
         }
     }, [user]);
 
-    const onRegister = (user) => {
-        props.dispatch(register(username, password));
+    const onRegister = (e) => {
+        e.preventDefault();
+        props.dispatch(register(username, password, isAdmin));
     };
 
     const onCancel = () => {
@@ -94,7 +103,7 @@ function SignUpView(props) {
 
     return (
         <div className={classes.usersignUpRoot}>
-            <Paper className={classes.signUpPaper}>
+            <Paper className={classes.signUpPaper} component="form">
                 <div className={classes.signUpRow}>
                     <Typography variant="h4" align="center">
                         Welcome at the Movie Database App!
@@ -130,6 +139,18 @@ function SignUpView(props) {
                         type="password"
                     />
                 </div>
+                <div className={classes.signUpRow}>
+                    <FormControlLabel
+                        control={
+                            <Checkbox
+                                checked={isAdmin}
+                                onChange={(e) => setIsAdmin(e.target.checked)}
+                                color="primary"
+                            />
+                        }
+                        label="Is Admin"
+                    />
+                </div>
                 {registerError !== "" ? (
                     <div className={classes.signUpRow}>
                         <Typography color="error">{registerError}</Typography>
@@ -154,6 +175,7 @@ function SignUpView(props) {
                             registerError !== "" ||
                             password !== password2
                         }
+                        type="submit"
                     >
                         Register
                     </Button>

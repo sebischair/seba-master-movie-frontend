@@ -5,7 +5,7 @@ export default class UserService {
         return "http://localhost:3000/auth";
     }
 
-    static register(user, pass) {
+    static register(user, pass, isAdmin) {
         console.log("call register", user, pass);
         return new Promise((resolve, reject) => {
             HttpService.post(
@@ -13,6 +13,7 @@ export default class UserService {
                 {
                     username: user,
                     password: pass,
+                    isAdmin: isAdmin,
                 },
                 function (data) {
                     resolve(data);

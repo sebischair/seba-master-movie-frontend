@@ -58,7 +58,8 @@ function UserLoginView(props) {
         }
     }, [user]);
 
-    const onLogin = (user) => {
+    const onLogin = (e) => {
+        e.preventDefault();
         props.dispatch(login(username, password));
     };
 
@@ -82,7 +83,7 @@ function UserLoginView(props) {
 
     return (
         <div className={classes.userLoginRoot}>
-            <Paper className={classes.loginPaper}>
+            <Paper className={classes.loginPaper} component="form">
                 <div className={classes.loginRow}>
                     <TextField
                         label="Username"
@@ -122,6 +123,7 @@ function UserLoginView(props) {
                             color="primary"
                             onClick={onLogin}
                             disabled={username === "" || password === ""}
+                            type="submit"
                         >
                             Login
                         </Button>

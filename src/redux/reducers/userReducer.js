@@ -26,6 +26,7 @@ export default function user(state = getUser(), action) {
         case "LOGOUT":
             return {};
         default:
+            console.log(state);
             return state;
     }
 }
