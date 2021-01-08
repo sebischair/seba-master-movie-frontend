@@ -215,8 +215,9 @@ function MovieListComponent(props) {
                                             <Typography>
                                                 {movie.avgAudienceRating === 0
                                                     ? "No Audience Rating"
-                                                    : movie.avgAudienceRating +
-                                                      " / 5"}
+                                                    : movie.avgAudienceRating.toFixed(
+                                                          1
+                                                      ) + " / 5.0"}
                                             </Typography>
                                         </TableCell>
                                         {props.isAdmin ? (

@@ -289,7 +289,9 @@ function MovieDetailsComponent(props) {
                 </Grid>
                 <Grid {...girdItemProps}>
                     <CustomChip
-                        content={movieYear}
+                        content={
+                            movieYear === -1 ? "No Release Year" : movieYear
+                        }
                         caption="Year"
                         editMode={false}
                     />
