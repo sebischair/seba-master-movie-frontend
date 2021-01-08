@@ -55,6 +55,7 @@ function MovieListView(props) {
             onClickDeleteMovie={onClickDeleteMovie}
             onAddMovie={onAddMovie}
             isLoggedIn={!!user.user}
+            isAdmin={!!user.user ? user.user.role === "admin" : false}
         />
     );
 }

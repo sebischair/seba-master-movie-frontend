@@ -53,7 +53,7 @@ function MovieDetailsView(props) {
             movie={selectedMovie.movie}
             onSave={onSave}
             isLoggedIn={!!user.user}
-            isAdmin={user.user.role === "admin"}
+            isAdmin={!!user.user ? user.user.role === "admin" : false}
         />
     ) : newMovie ? (
         <MovieDetailsComponent

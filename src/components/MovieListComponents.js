@@ -12,6 +12,7 @@ import {
     TableHead,
     TableRow,
     Typography,
+    TableSortLabel,
 } from "@material-ui/core";
 import PropTypes from "prop-types";
 import ImageIcon from "@material-ui/icons/Image";
@@ -45,6 +46,72 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
+function SortableTableHeadCell(props) {
+    const classes = useStyles();
+
+    const { headCell, order, orderBy, onRequestSort } = props;
+
+    return (
+        <TableCell
+            key={headCell.id}
+            sortDirection={orderBy === headCell.id ? order : false}
+        >
+            <TableSortLabel
+                active={orderBy === headCell.id}
+                direction={orderBy === headCell.id ? order : "asc"}
+                onClick={onRequestSort}
+            >
+                {headCell.label}
+            </TableSortLabel>
+        </TableCell>
+    );
+}
+
+const sortableHeadCells = [
+    {
+        id: "title",
+        label: "Titel",
+    },
+    {
+        id: "year",
+        label: "Year",
+    },
+    {
+        id: "criticsRating",
+        label: "Critics Rating",
+    },
+    {
+        id: "avgAudienceRating",
+        label: "Audience Rating",
+    },
+];
+
+function descendingComparator(a, b, orderBy) {
+    if (b[orderBy] < a[orderBy]) {
+        return -1;
+    }
+    if (b[orderBy] > a[orderBy]) {
+        return 1;
+    }
+    return 0;
+}
+
+function getComparator(order, orderBy) {
+    return order === "desc"
+        ? (a, b) => descendingComparator(a, b, orderBy)
+        : (a, b) => -descendingComparator(a, b, orderBy);
+}
+
+function stableSort(array, comparator) {
+    const stabilizedThis = array.map((el, index) => [el, index]);
+    stabilizedThis.sort((a, b) => {
+        const order = comparator(a[0], b[0]);
+        if (order !== 0) return order;
+        return a[1] - b[1];
+    });
+    return stabilizedThis.map((el) => el[0]);
+}
+
 /**
  * For presenting and changing movies
  * @param {props} props
@@ -52,6 +119,19 @@ const useStyles = makeStyles((theme) => ({
 function MovieListComponent(props) {
     // with this you can access the above defiend style classes
     const classes = useStyles();
+
+    const [orderBy, setOrderBy] = React.useState();
+    const [order, setOrder] = React.useState();
+
+    const onRequestSort = (cellId, event) => {
+        // if the current orderBy is also the clicked property then the direction of the sorting should be changed
+        // otherwise the fist order direction is always ascending
+        const isAsc = orderBy === cellId && order === "asc";
+        setOrder(isAsc ? "desc" : "asc");
+
+        // setting the called cell id as order by
+        setOrderBy(cellId);
+    };
 
     return (
         <div className={classes.movieListRoot}>
@@ -72,48 +152,87 @@ function MovieListComponent(props) {
                         <TableHead>
                             <TableRow>
                                 <TableCell>Picture</TableCell>
-                                <TableCell>Title</TableCell>
+                                {sortableHeadCells.map((headCell) => (
+                                    <SortableTableHeadCell
+                                        order={order}
+                                        orderBy={orderBy}
+                                        headCell={headCell}
+                                        onRequestSort={() =>
+                                            onRequestSort(headCell.id)
+                                        }
+                                    />
+                                ))}
                                 <TableCell>Delete</TableCell>
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            {props.movies.map((movie, index) => (
-                                <TableRow
-                                    key={index}
-                                    onClick={() =>
-                                        props.onClickDisplayMovie(movie._id)
-                                    }
-                                >
-                                    <TableCell>
-                                        {movie.posters ? (
-                                            <img
-                                                src={movie.posters.thumbnail}
-                                                alt="Movie Thumbnail"
-                                            />
-                                        ) : (
-                                            <ImageIcon />
-                                        )}
-                                    </TableCell>
-                                    <TableCell>
-                                        <Typography variant="h6">
-                                            {movie.title}
-                                        </Typography>
-                                    </TableCell>
-                                    <TableCell>
-                                        <IconButton
-                                            onClick={(e) => {
-                                                e.stopPropagation();
-                                                props.onClickDeleteMovie(
-                                                    movie._id
-                                                );
-                                            }}
-                                            disabled={!props.isLoggedIn}
-                                        >
-                                            <DeleteIcon />
-                                        </IconButton>
-                                    </TableCell>
-                                </TableRow>
-                            ))}
+                            {stableSort(
+                                props.movies,
+                                getComparator(order, orderBy)
+                            ).map((movie, index) => {
+                                return (
+                                    <TableRow
+                                        key={index}
+                                        onClick={() =>
+                                            props.onClickDisplayMovie(movie._id)
+                                        }
+                                    >
+                                        <TableCell>
+                                            {movie.posters ? (
+                                                <img
+                                                    src={
+                                                        movie.posters.thumbnail
+                                                    }
+                                                    alt="Movie Thumbnail"
+                                                />
+                                            ) : (
+                                                <ImageIcon />
+                                            )}
+                                        </TableCell>
+                                        <TableCell>
+                                            <Typography variant="h6">
+                                                {movie.title}
+                                            </Typography>
+                                        </TableCell>
+                                        <TableCell>
+                                            <Typography>
+                                                {movie.year === -1
+                                                    ? "No Release Year"
+                                                    : movie.year}
+                                            </Typography>
+                                        </TableCell>
+                                        <TableCell>
+                                            <Typography>
+                                                {movie.criticsRating === 0
+                                                    ? "No Critics Rating"
+                                                    : movie.criticsRating +
+                                                      " / 5"}
+                                            </Typography>
+                                        </TableCell>
+                                        <TableCell>
+                                            <Typography>
+                                                {movie.avgAudienceRating === 0
+                                                    ? "No Audience Rating"
+                                                    : movie.avgAudienceRating +
+                                                      " / 5"}
+                                            </Typography>
+                                        </TableCell>
+                                        <TableCell>
+                                            <IconButton
+                                                onClick={(e) => {
+                                                    e.stopPropagation();
+                                                    props.onClickDeleteMovie(
+                                                        movie._id
+                                                    );
+                                                }}
+                                                disabled={!props.isLoggedIn}
+                                            >
+                                                <DeleteIcon />
+                                            </IconButton>
+                                        </TableCell>
+                                    </TableRow>
+                                );
+                            })}
                         </TableBody>
                     </Table>
                 </TableContainer>

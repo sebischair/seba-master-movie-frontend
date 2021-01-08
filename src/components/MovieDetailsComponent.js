@@ -228,6 +228,7 @@ function MovieDetailsComponent(props) {
                     classes.barMinHeight
                 }
             >
+                {/* Checks if the current user is admin. Only an admin can alter movies */}
                 {props.isAdmin ? (
                     editMode ? (
                         <React.Fragment>
