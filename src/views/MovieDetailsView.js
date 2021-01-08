@@ -60,6 +60,7 @@ function MovieDetailsView(props) {
             new={true}
             onCreate={onCreate}
             isLoggedIn={!!user.user}
+            isAdmin={!!user.user ? user.user.role === "admin" : false}
         />
     ) : null;
 }

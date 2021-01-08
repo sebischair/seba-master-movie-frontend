@@ -38,6 +38,7 @@ function Ratings(props) {
                             onChange={(e, value) =>
                                 props.onChangeOwnRating(value)
                             }
+                            readOnly={props.isAdmin}
                             name="audience-rating"
                         />
                     </TableCell>

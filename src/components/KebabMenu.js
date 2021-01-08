@@ -22,6 +22,7 @@ function KebabMenu(props) {
     const onClickLogout = () => {
         props.dispatch(logout());
         props.onClose();
+        props.history.push("/");
     };
 
     return (

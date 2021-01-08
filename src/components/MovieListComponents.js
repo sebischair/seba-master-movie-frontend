@@ -162,7 +162,9 @@ function MovieListComponent(props) {
                                         }
                                     />
                                 ))}
-                                <TableCell>Delete</TableCell>
+                                {props.isAdmin ? (
+                                    <TableCell>Delete</TableCell>
+                                ) : null}
                             </TableRow>
                         </TableHead>
                         <TableBody>
@@ -217,19 +219,20 @@ function MovieListComponent(props) {
                                                       " / 5"}
                                             </Typography>
                                         </TableCell>
-                                        <TableCell>
-                                            <IconButton
-                                                onClick={(e) => {
-                                                    e.stopPropagation();
-                                                    props.onClickDeleteMovie(
-                                                        movie._id
-                                                    );
-                                                }}
-                                                disabled={!props.isLoggedIn}
-                                            >
-                                                <DeleteIcon />
-                                            </IconButton>
-                                        </TableCell>
+                                        {props.isAdmin ? (
+                                            <TableCell>
+                                                <IconButton
+                                                    onClick={(e) => {
+                                                        e.stopPropagation();
+                                                        props.onClickDeleteMovie(
+                                                            movie._id
+                                                        );
+                                                    }}
+                                                >
+                                                    <DeleteIcon />
+                                                </IconButton>
+                                            </TableCell>
+                                        ) : null}
                                     </TableRow>
                                 );
                             })}
@@ -237,7 +240,7 @@ function MovieListComponent(props) {
                     </Table>
                 </TableContainer>
             </Paper>
-            {props.isLoggedIn ? (
+            {props.isAdmin ? (
                 <Button
                     onClick={props.onAddMovie}
                     variant="contained"

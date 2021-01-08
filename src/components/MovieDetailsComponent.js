@@ -84,8 +84,6 @@ function MovieDetailsComponent(props) {
             return;
         }
 
-        console.log(props.movie);
-
         setMovieTitle(props.movie.title);
         setMovieSynopsis(props.movie.synopsis);
         setMovieAgeRating(props.movie.mpaa_rating);
@@ -331,37 +329,8 @@ function MovieDetailsComponent(props) {
                                 onChangeOwnRating={(value) =>
                                     onChangeOwnRating(value)
                                 }
+                                isAdmin={props.isAdmin}
                             />
-
-                            // <Table>
-                            //     <TableBody>
-                            //         <TableRow>
-                            //             <TableCell>Critics</TableCell>
-                            //             <TableCell>
-                            //                 <Rating
-                            //                     value={criticsRating}
-                            //                     onChange={(e, value) =>
-                            //                         setCriticsRating(value)
-                            //                     }
-                            //                     name="critics-rating"
-                            //                 />
-                            //             </TableCell>
-                            //         </TableRow>
-
-                            //         <TableRow>
-                            //             <TableCell>Audience</TableCell>
-                            //             <TableCell>
-                            //                 <Rating
-                            //                     value={avgAudienceRating}
-                            //                     onChange={(e, value) =>
-                            //                         onChangeOwnRating(value)
-                            //                     }
-                            //                     name="audience-rating"
-                            //                 />
-                            //             </TableCell>
-                            //         </TableRow>
-                            //     </TableBody>
-                            // </Table>
                         }
                     />
                 </Grid>

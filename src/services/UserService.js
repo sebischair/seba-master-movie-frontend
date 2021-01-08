@@ -6,7 +6,6 @@ export default class UserService {
     }
 
     static register(user, pass, isAdmin) {
-        console.log("call register", user, pass);
         return new Promise((resolve, reject) => {
             HttpService.post(
                 `${UserService.baseURL()}/register`,
