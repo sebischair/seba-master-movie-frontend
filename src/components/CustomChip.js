@@ -36,6 +36,7 @@ function CustomChip(props) {
                 align="center"
                 onChange={props.onChange}
                 variant="h6"
+                isEmptyText="tba"
             />
             <Typography variant="caption" align="center">
                 {props.caption}

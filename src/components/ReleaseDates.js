@@ -53,8 +53,8 @@ function ReleaseDates(props) {
 
 // attributes of props and their type
 ReleaseDates.propTypes = {
-    theaterRelease: PropTypes.string,
-    blurayRelase: PropTypes.string,
+    theaterRelease: PropTypes.any,
+    blurayRelase: PropTypes.any,
     editMode: PropTypes.bool,
     onChangeTheaterRelease: PropTypes.func,
     onChangeBlurayRelease: PropTypes.func,

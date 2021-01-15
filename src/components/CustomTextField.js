@@ -33,7 +33,24 @@ function CustomTextField(props) {
 
     const classes = useStyles();
 
-    return props.type !== "date" ? (
+    return (props.value === "" || !props.value || props.value === null) &&
+        !props.editMode ? (
+        // if no value is given return the given text
+        <TextField
+            value={props.isEmptyText}
+            disabled={true}
+            variant="standard"
+            InputProps={{
+                className: classes.inputBase,
+                disableUnderline: true,
+            }}
+            inputProps={{
+                className: classes.input,
+            }}
+            {...props.furtherProps}
+        />
+    ) : props.type !== "date" ? (
+        // return a standard textfield
         <TextField
             value={
                 props.editMode
@@ -54,9 +71,8 @@ function CustomTextField(props) {
             }}
             {...props.furtherProps}
         />
-    ) : (props.value === "" || !props.value) && !props.editMode ? (
-        <Typography>{props.isEmptyText}</Typography>
     ) : (
+        // if the field has a value and the type is date return a datepicker
         <MuiPickersUtilsProvider utils={DateFnsUtils}>
             <KeyboardDatePicker
                 format="dd.MM.yyyy"

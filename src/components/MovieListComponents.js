@@ -152,8 +152,9 @@ function MovieListComponent(props) {
                         <TableHead>
                             <TableRow>
                                 <TableCell>Picture</TableCell>
-                                {sortableHeadCells.map((headCell) => (
+                                {sortableHeadCells.map((headCell, index) => (
                                     <SortableTableHeadCell
+                                        key={index}
                                         order={order}
                                         orderBy={orderBy}
                                         headCell={headCell}
