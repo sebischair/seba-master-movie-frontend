@@ -44,6 +44,10 @@ const useStyles = makeStyles((theme) => ({
     movieListPaper: {
         width: "1000px",
     },
+    image: {
+        borderRadius: theme.shape.borderRadius,
+        boxShadow: theme.shadows[2],
+    },
 }));
 
 function SortableTableHeadCell(props) {
@@ -187,6 +191,7 @@ function MovieListComponent(props) {
                                                         movie.posters.thumbnail
                                                     }
                                                     alt="Movie Thumbnail"
+                                                    className={classes.image}
                                                 />
                                             ) : (
                                                 <ImageIcon />

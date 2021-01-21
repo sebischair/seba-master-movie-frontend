@@ -106,7 +106,7 @@ function SignUpView(props) {
             <Paper className={classes.signUpPaper} component="form">
                 <div className={classes.signUpRow}>
                     <Typography variant="h4" align="center">
-                        Welcome at the Movie Database App!
+                        Welcome to the Movie Database App!
                     </Typography>
                 </div>
                 <div className={classes.signUpRow}>

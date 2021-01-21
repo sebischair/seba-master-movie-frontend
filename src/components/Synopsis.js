@@ -27,6 +27,10 @@ const useStyles = makeStyles((theme) => ({
     margin: {
         margin: theme.spacing(1),
     },
+    image: {
+        borderRadius: theme.shape.borderRadius,
+        boxShadow: theme.shadows[2],
+    },
 }));
 
 /**
@@ -93,7 +97,10 @@ function Synopsis(props) {
     ) : (
         <div className={classes.flexRow}>
             <div>
-                <img src={props.moviethumbnail} className={classes.margin} />
+                <img
+                    src={props.moviethumbnail}
+                    className={classes.margin + " " + classes.image}
+                />
             </div>
             <CustomTextField
                 value={props.movieSynopsis}

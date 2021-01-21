@@ -42,7 +42,10 @@ function MovieCast(props) {
                         ? props.movieCast.map((actor, index) => (
                               <TableRow key={index}>
                                   <TableCell>
-                                      <CustomTextField value={actor.name} />
+                                      <CustomTextField
+                                          value={actor.name}
+                                          isEmptyText="Actor"
+                                      />
                                   </TableCell>
                                   {actor.characters &&
                                   Array.isArray(actor.characters) ? (
@@ -51,6 +54,7 @@ function MovieCast(props) {
                                           <TableCell>
                                               <CustomTextField
                                                   value={actor.characters[0]}
+                                                  isEmptyText="a Role"
                                               />
                                           </TableCell>
                                       </React.Fragment>

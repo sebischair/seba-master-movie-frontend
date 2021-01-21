@@ -1,11 +1,10 @@
 import React, { useEffect } from "react";
 import PropTypes from "prop-types";
 import { makeStyles } from "@material-ui/core/styles";
-import { TextField, Typography } from "@material-ui/core";
+import { TextField } from "@material-ui/core";
 import DateFnsUtils from "@date-io/date-fns";
 import {
     MuiPickersUtilsProvider,
-    KeyboardTimePicker,
     KeyboardDatePicker,
 } from "@material-ui/pickers";
 import TodayIcon from "@material-ui/icons/Today";
@@ -33,6 +32,12 @@ function CustomTextField(props) {
 
     const classes = useStyles();
 
+    const [value, setValue] = React.useState(props.value);
+
+    useEffect(() => {
+        setValue(props.value);
+    }, [props.value]);
+
     return (props.value === "" || !props.value || props.value === null) &&
         !props.editMode ? (
         // if no value is given return the given text
@@ -54,18 +59,25 @@ function CustomTextField(props) {
         <TextField
             value={
                 props.editMode
-                    ? props.value
+                    ? value
                     : props.value + (props.suffix ? " " + props.suffix : "")
             }
-            onChange={(e) =>
+            onChange={(e) => setValue(e.target.value)}
+            onBlur={(e) =>
                 props.onChange ? props.onChange(e.target.value) : null
             }
             disabled={!props.editMode}
             variant={props.editMode ? "outlined" : "standard"}
-            InputProps={{
-                className: classes.inputBase,
-                disableUnderline: true,
-            }}
+            InputProps={
+                props.editMode
+                    ? {
+                          className: classes.inputBase,
+                      }
+                    : {
+                          className: classes.inputBase,
+                          disableUnderline: true,
+                      }
+            }
             inputProps={{
                 className: classes.input,
             }}
@@ -106,7 +118,7 @@ CustomTextField.propTypes = {
     align: PropTypes.string,
     variant: PropTypes.string,
     editMode: PropTypes.bool,
-    value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+    value: PropTypes.any,
     onChange: PropTypes.func,
     furtherProps: PropTypes.any,
 };

@@ -42,6 +42,7 @@ const useStyles = makeStyles((theme) => ({
     },
     maxWidth: {
         width: "100%",
+        maxWidth: "1500px",
     },
     pageArea: {
         paddingBottom: theme.spacing(2),
@@ -50,8 +51,7 @@ const useStyles = makeStyles((theme) => ({
         },
     },
     title: {
-        marginTop: theme.spacing(6),
-        marginBottom: theme.spacing(2),
+        marginTop: theme.spacing(4),
     },
     barMinHeight: {
         minHeight: theme.spacing(5),
@@ -279,7 +279,7 @@ function MovieDetailsComponent(props) {
                         fullWidth: true,
                     }}
                     align="center"
-                    variant="h4"
+                    variant="h2"
                     onChange={onChangeTitle}
                 />
             </div>
@@ -377,79 +377,6 @@ function MovieDetailsComponent(props) {
                                 onChangeThumbnail={onChangeThumbnail}
                                 onChangeSynopsis={onChangeSynopsis}
                             />
-                            // editMode ? (
-                            //     <div className={classes.flexCol}>
-                            //         <Table>
-                            //             <TableBody>
-                            //                 <TableRow>
-                            //                     <TableCell>
-                            //                         <div
-                            //                             className={
-                            //                                 classes.flexRow +
-                            //                                 " " +
-                            //                                 classes.justifySpaceBetween
-                            //                             }
-                            //                         >
-                            //                             <Typography variant="body2">
-                            //                                 Thumbnail
-                            //                             </Typography>
-                            //                             <Tooltip
-                            //                                 title="Please enter the link to the image."
-                            //                                 interactive
-                            //                             >
-                            //                                 <InfoIcon />
-                            //                             </Tooltip>
-                            //                         </div>
-                            //                     </TableCell>
-                            //                     <TableCell>
-                            //                         <CustomTextField
-                            //                             value={moviethumbnail}
-                            //                             editMode={editMode}
-                            //                             furtherProps={{
-                            //                                 fullWidth: true,
-                            //                             }}
-                            //                             onChange={
-                            //                                 onChangeThumbnail
-                            //                             }
-                            //                         />
-                            //                     </TableCell>
-                            //                 </TableRow>
-
-                            //                 <TableRow>
-                            //                     <TableCell>Synopsis</TableCell>
-                            //                     <TableCell>
-                            //                         <CustomTextField
-                            //                             value={movieSynopsis}
-                            //                             editMode={editMode}
-                            //                             furtherProps={{
-                            //                                 multiline: true,
-                            //                                 fullWidth: true,
-                            //                             }}
-                            //                             onChange={
-                            //                                 onChangeSynopsis
-                            //                             }
-                            //                             isEmptyText="tba"
-                            //                         />
-                            //                     </TableCell>
-                            //                 </TableRow>
-                            //             </TableBody>
-                            //         </Table>
-                            //     </div>
-                            // ) : (
-                            //     <div className={classes.flexRow}>
-                            //         <img src={moviethumbnail} />
-                            //         <CustomTextField
-                            //             value={movieSynopsis}
-                            //             editMode={editMode}
-                            //             furtherProps={{
-                            //                 multiline: true,
-                            //                 fullWidth: true,
-                            //             }}
-                            //             onChange={onChangeSynopsis}
-                            //             isEmptyText="tba"
-                            //         />
-                            //     </div>
-                            // )
                         }
                     />
                 </Grid>

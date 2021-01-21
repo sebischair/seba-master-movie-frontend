@@ -109,7 +109,7 @@ function UserLoginView(props) {
                     </div>
                 ) : null}
                 <div className={classes.loginRow + " " + classes.loginButtons}>
-                    <Button onClick={onSignUp}>Not Registed yet?</Button>
+                    <Button onClick={onSignUp}>Not Registered yet?</Button>
                     <div>
                         <Button
                             className={classes.loginButton}
