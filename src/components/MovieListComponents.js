@@ -141,7 +141,7 @@ function MovieListComponent(props) {
         <div className={classes.movieListRoot}>
             <div className={classes.movieListHeader}>
                 <Typography variant="h4" align="center">
-                    Welcome to the Movie Example App!
+                    Welcome to the Movie Database App!
                 </Typography>
                 <Divider className={classes.headerDivider} />
                 <Typography align="center">

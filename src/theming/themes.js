@@ -17,31 +17,27 @@ const themeindependent = {
 const appThemeOptions = {
     [AppTheme.LIGHT]: {
         palette: {
+            type: "light",
             primary: {
-                light: "#6ab7ff",
-                main: "#1e88e5",
-                dark: "#005cb2",
+                light: "#7986cb",
+                main: "#3f51b5",
+                dark: "#303f9f",
             },
             secondary: {
-                light: green[400],
-                main: green[600],
-                dark: green[800],
+                light: "#ff4081",
+                main: "#f50057",
+                dark: "#c51162",
             },
             background: {
                 paper: "#fff",
-                default: "#eee",
-                hover: "#f8f8f8",
-            },
-            text: {
-                primary: "rgba(0, 0, 0, 0.87)",
-                secondary: "rgba(0, 0, 0, 0.54)",
-                disabled: "rgba(0, 0, 0, 0.87)",
+                default: "#fafafa",
             },
         },
         ...themeindependent,
     },
     [AppTheme.DARK]: {
         palette: {
+            type: "dark",
             primary: {
                 light: "#616161",
                 main: "#424242",
@@ -55,12 +51,6 @@ const appThemeOptions = {
             background: {
                 paper: "#303030",
                 default: "#000",
-                hover: "#383838",
-            },
-            text: {
-                primary: "#fff",
-                secondary: "rgba(255, 255, 255, 0.7)",
-                disabled: "#fff",
             },
         },
         ...themeindependent,

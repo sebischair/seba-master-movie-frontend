@@ -4,6 +4,12 @@ const getUser = () => {
         let base64Url = token.split(".")[1];
         let base64 = base64Url.replace("-", "+").replace("_", "/");
         let userJson = JSON.parse(window.atob(base64));
+        // if token is expired delete it and return {}
+        // --> User is not logged in anymore.
+        if (userJson.exp > Date.now()) {
+            window.localStorage.removeItem("jwtToken");
+            return {};
+        }
         return {
             user: {
                 _id: userJson._id,

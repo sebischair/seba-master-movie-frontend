@@ -55,6 +55,9 @@ const useStyles = makeStyles((theme) => ({
     },
     barMinHeight: {
         minHeight: theme.spacing(5),
+        position: "absolute",
+        top: theme.spacing(1),
+        right: theme.spacing(2),
     },
 }));
 
@@ -65,7 +68,7 @@ const useStyles = makeStyles((theme) => ({
 function MovieDetailsComponent(props) {
     const classes = useStyles();
 
-    const [movieTitle, setMovieTitle] = React.useState("");
+    const [movieTitle, setMovieTitle] = React.useState(" ");
     const [movieSynopsis, setMovieSynopsis] = React.useState("");
     const [movieCast, setMovieCast] = React.useState([]);
     const [movieAgeRating, setMovieAgeRating] = React.useState("");
@@ -393,6 +396,7 @@ function MovieDetailsComponent(props) {
                                 onAddCastMember={onAddCastMember}
                                 onRemoveCastMember={onRemoveCastMember}
                                 isLoggedIn={props.isLoggedIn}
+                                isAdmin={props.isAdmin}
                             />
                         }
                     />

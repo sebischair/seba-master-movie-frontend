@@ -35,7 +35,7 @@ function App() {
     const store = createStore(reducers, applyMiddleware(thunkMiddleware));
 
     useEffect(() => {
-        document.title = "Movie Example App";
+        document.title = "Movie Database App";
     }, []);
 
     const toggleTheme = () => {

@@ -64,28 +64,30 @@ function MovieCast(props) {
                                           <TableCell></TableCell>
                                       </React.Fragment>
                                   )}
-                                  <TableCell>
-                                      {props.editMode ? (
-                                          <IconButton
-                                              size="small"
-                                              onClick={() =>
-                                                  props.onRemoveCastMember(
-                                                      index
-                                                  )
-                                              }
-                                          >
-                                              <Delete />
-                                          </IconButton>
-                                      ) : (
-                                          <IconButton
-                                              size="small"
-                                              onClick={props.toggleEditMode}
-                                              disabled={!props.isLoggedIn}
-                                          >
-                                              <Edit />
-                                          </IconButton>
-                                      )}
-                                  </TableCell>
+                                  {props.isAdmin ? (
+                                      <TableCell>
+                                          {props.editMode ? (
+                                              <IconButton
+                                                  size="small"
+                                                  onClick={() =>
+                                                      props.onRemoveCastMember(
+                                                          index
+                                                      )
+                                                  }
+                                              >
+                                                  <Delete />
+                                              </IconButton>
+                                          ) : (
+                                              <IconButton
+                                                  size="small"
+                                                  onClick={props.toggleEditMode}
+                                                  disabled={!props.isLoggedIn}
+                                              >
+                                                  <Edit />
+                                              </IconButton>
+                                          )}
+                                      </TableCell>
+                                  ) : null}
                               </TableRow>
                           ))
                         : null}
