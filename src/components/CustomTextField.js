@@ -16,6 +16,12 @@ import TodayIcon from "@material-ui/icons/Today";
 function CustomTextField(props) {
     // by moving the styles inside the functional component the props can influence the style
     const useStyles = makeStyles((theme) => ({
+        customtextfieldroot: {
+            minHeight: theme.mixins.textfieldminheight,
+            width: props.nofullwidth ? "" : "100%",
+            display: "flex",
+            alignItems: "center",
+        },
         inputBase: {
             padding: theme.spacing(1),
             color: "inherit !important",
@@ -38,78 +44,84 @@ function CustomTextField(props) {
         setValue(props.value);
     }, [props.value]);
 
-    return (props.value === "" || !props.value || props.value === null) &&
-        !props.editMode ? (
-        // if no value is given return the given text
-        <TextField
-            value={props.isEmptyText}
-            disabled={true}
-            variant="standard"
-            InputProps={{
-                className: classes.inputBase,
-                disableUnderline: true,
-            }}
-            inputProps={{
-                className: classes.input,
-            }}
-            {...props.furtherProps}
-        />
-    ) : props.type !== "date" ? (
-        // return a standard textfield
-        <TextField
-            value={
-                props.editMode
-                    ? value
-                    : props.value + (props.suffix ? " " + props.suffix : "")
-            }
-            onChange={(e) => setValue(e.target.value)}
-            onBlur={(e) =>
-                props.onChange ? props.onChange(e.target.value) : null
-            }
-            disabled={!props.editMode}
-            variant={props.editMode ? "outlined" : "standard"}
-            InputProps={
-                props.editMode
-                    ? {
-                          className: classes.inputBase,
-                      }
-                    : {
-                          className: classes.inputBase,
-                          disableUnderline: true,
-                      }
-            }
-            inputProps={{
-                className: classes.input,
-            }}
-            {...props.furtherProps}
-        />
-    ) : (
-        // if the field has a value and the type is date return a datepicker
-        <MuiPickersUtilsProvider utils={DateFnsUtils}>
-            <KeyboardDatePicker
-                format="dd.MM.yyyy"
-                value={props.value}
-                readOnly={!props.editMode}
-                keyboardIcon={props.editMode ? <TodayIcon /> : null}
-                variant={props.editMode ? "outlined" : "standard"}
-                InputProps={{
-                    className: classes.inputBase,
-                    disableUnderline: true,
-                }}
-                inputProps={{
-                    className: classes.input,
-                }}
-                {...props.furtherProps}
-                onChange={(date) =>
-                    props.onChange ? props.onChange(date) : null
-                }
-                invalidDateMessage=""
-                //onChange={onChangeDate}
-                KeyboardButtonProps={{
-                    "aria-label": "change date",
-                }}
-            />
-        </MuiPickersUtilsProvider>
+    return (
+        <div className={classes.customtextfieldroot}>
+            {props.value === "" ||
+            !props.value ||
+            (props.value === null && !props.editMode) ? (
+                // if no value is given return the given text
+                <TextField
+                    value={props.isEmptyText}
+                    disabled={true}
+                    variant="standard"
+                    InputProps={{
+                        className: classes.inputBase,
+                        disableUnderline: true,
+                    }}
+                    inputProps={{
+                        className: classes.input,
+                    }}
+                    {...props.furtherProps}
+                />
+            ) : props.type !== "date" ? (
+                // return a standard textfield
+                <TextField
+                    value={
+                        props.editMode
+                            ? value
+                            : props.value +
+                              (props.suffix ? " " + props.suffix : "")
+                    }
+                    onChange={(e) => setValue(e.target.value)}
+                    onBlur={(e) =>
+                        props.onChange ? props.onChange(e.target.value) : null
+                    }
+                    disabled={!props.editMode}
+                    variant={props.editMode ? "outlined" : "standard"}
+                    InputProps={
+                        props.editMode
+                            ? {
+                                  className: classes.inputBase,
+                              }
+                            : {
+                                  className: classes.inputBase,
+                                  disableUnderline: true,
+                              }
+                    }
+                    inputProps={{
+                        className: classes.input,
+                    }}
+                    {...props.furtherProps}
+                />
+            ) : (
+                // if the field has a value and the type is date return a datepicker
+                <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                    <KeyboardDatePicker
+                        format="dd.MM.yyyy"
+                        value={props.value}
+                        readOnly={!props.editMode}
+                        keyboardIcon={props.editMode ? <TodayIcon /> : null}
+                        variant={props.editMode ? "outlined" : "standard"}
+                        InputProps={{
+                            className: classes.inputBase,
+                            disableUnderline: true,
+                        }}
+                        inputProps={{
+                            className: classes.input,
+                        }}
+                        {...props.furtherProps}
+                        onChange={(date) =>
+                            props.onChange ? props.onChange(date) : null
+                        }
+                        invalidDateMessage=""
+                        //onChange={onChangeDate}
+                        KeyboardButtonProps={{
+                            "aria-label": "change date",
+                        }}
+                    />
+                </MuiPickersUtilsProvider>
+            )}
+        </div>
     );
 }
 

@@ -5,6 +5,9 @@ import { AppBar, IconButton, Toolbar, Typography } from "@material-ui/core";
 
 import MenuIcon from "@material-ui/icons/Menu";
 import LocalMoviesIcon from "@material-ui/icons/LocalMovies";
+import GitHubIcon from "@material-ui/icons/GitHub";
+import WbSunnyIcon from "@material-ui/icons/WbSunny";
+import Brightness3Icon from "@material-ui/icons/Brightness3";
 
 import KebabMenu from "./KebabMenu";
 
@@ -27,6 +30,14 @@ function Header(props) {
 
     const [menuAnchor, setMenuAnchor] = React.useState(null);
 
+    const onClickGithub = (event) => {
+        var win = window.open(
+            "https://github.com/sebischair/seba-master-movie-frontend",
+            "_blank"
+        );
+        win.focus();
+    };
+
     return (
         <AppBar position="sticky">
             <KebabMenu
@@ -46,6 +57,12 @@ function Header(props) {
                 >
                     Movie Example App
                 </Typography>
+                <IconButton onClick={onClickGithub} color="inherit">
+                    <GitHubIcon />
+                </IconButton>
+                <IconButton onClick={props.toggletheme} color="inherit">
+                    {props.darkmode ? <WbSunnyIcon /> : <Brightness3Icon />}
+                </IconButton>
                 <IconButton
                     onClick={(event) => setMenuAnchor(event.currentTarget)}
                     color="inherit"

@@ -12,7 +12,7 @@ import CopyrightIcon from "@material-ui/icons/Copyright";
 const useStyles = makeStyles((theme) => ({
     footerRoot: {
         display: "flex",
-        margin: "auto",
+        justifyContent: "center",
         paddingTop: theme.spacing(1),
         paddingBottom: theme.spacing(1),
     },

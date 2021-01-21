@@ -17,11 +17,18 @@ function ReleaseDates(props) {
         <Table>
             <TableBody>
                 <TableRow>
-                    <TableCell>Theater</TableCell>
+                    <TableCell>
+                        <CustomTextField
+                            value="Theater"
+                            editMode={false}
+                            variant="body1"
+                        />
+                    </TableCell>
                     <TableCell>
                         <CustomTextField
                             type="date"
                             isEmptyText="No Theater Release"
+                            variant="body1"
                             value={
                                 props.theaterRelease ? props.theaterRelease : ""
                             }
@@ -33,10 +40,17 @@ function ReleaseDates(props) {
                     </TableCell>
                 </TableRow>
                 <TableRow>
-                    <TableCell>Blu-Ray</TableCell>
+                    <TableCell>
+                        <CustomTextField
+                            value="Blu-Ray"
+                            editMode={false}
+                            variant="body1"
+                        />
+                    </TableCell>
                     <TableCell>
                         <CustomTextField
                             type="date"
+                            variant="body1"
                             isEmptyText="No Bluray Release"
                             value={props.blurayRelase ? props.blurayRelase : ""}
                             editMode={props.editMode}

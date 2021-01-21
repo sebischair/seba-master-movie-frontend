@@ -29,7 +29,7 @@ function MovieDetailsView(props) {
             // trigger movie load from backend
             props.getMovie(movieId);
         }
-    }, []);
+    }, [props.match.params]);
 
     // for saving an existing movie
     const onSave = (movie) => {

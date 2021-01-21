@@ -9,11 +9,14 @@ import {
     makeStyles,
 } from "@material-ui/core/styles";
 import CssBaseline from "@material-ui/core/CssBaseline";
+import ScrollContainer from "./components/ScrollContainer";
 
 import reducers from "./redux/reducers";
 import routes from "./routes";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
+import AppTheme from "./theming/themetypes";
+import AppThemeOptions from "./theming/themes";
 
 const useStyles = makeStyles((theme) => ({
     appRoot: {
@@ -26,26 +29,37 @@ const useStyles = makeStyles((theme) => ({
 function App() {
     const classes = useStyles();
 
-    const theme = createMuiTheme({});
+    const [theme, setTheme] = React.useState(AppTheme.LIGHT);
+
+    //const theme = createMuiTheme({});
     const store = createStore(reducers, applyMiddleware(thunkMiddleware));
 
     useEffect(() => {
         document.title = "Movie Example App";
     }, []);
 
+    const toggleTheme = () => {
+        setTheme(theme === AppTheme.LIGHT ? AppTheme.DARK : AppTheme.LIGHT);
+    };
+
     return (
         <div className={classes.appRoot}>
-            <MuiThemeProvider theme={theme}>
+            <MuiThemeProvider theme={createMuiTheme(AppThemeOptions[theme])}>
                 <Provider store={store}>
                     <CssBaseline />
                     <React.Fragment>
-                        <Header />
-                        <Switch>
-                            {routes.map((route, i) => (
-                                <Route key={i} {...route} />
-                            ))}
-                        </Switch>
-                        <Footer />
+                        <Header
+                            darkmode={theme === AppTheme.DARK}
+                            toggletheme={toggleTheme}
+                        />
+                        <ScrollContainer>
+                            <Switch>
+                                {routes.map((route, i) => (
+                                    <Route key={i} {...route} />
+                                ))}
+                            </Switch>
+                            <Footer />
+                        </ScrollContainer>
                     </React.Fragment>
                 </Provider>
             </MuiThemeProvider>
