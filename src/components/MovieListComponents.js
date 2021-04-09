@@ -13,10 +13,10 @@ import {
     TableRow,
     Typography,
     TableSortLabel,
+    TablePagination,
 } from "@material-ui/core";
 import PropTypes from "prop-types";
-import ImageIcon from "@material-ui/icons/Image";
-import DeleteIcon from "@material-ui/icons/Delete";
+import MovieListRow from "./MovieListRow";
 
 // a material ui function. With this way of styling you have the style classes of this component in one place
 // and you can access the global theme of the application
@@ -59,6 +59,8 @@ function SortableTableHeadCell(props) {
         <TableCell
             key={headCell.id}
             sortDirection={orderBy === headCell.id ? order : false}
+            align="center"
+            width={props.width}
         >
             <TableSortLabel
                 active={orderBy === headCell.id}
@@ -75,18 +77,22 @@ const sortableHeadCells = [
     {
         id: "title",
         label: "Titel",
+        width: "40%",
     },
     {
         id: "year",
         label: "Year",
+        width: "10%",
     },
     {
         id: "criticsRating",
         label: "Critics Rating",
+        width: "15%",
     },
     {
         id: "avgAudienceRating",
         label: "Audience Rating",
+        width: "15%",
     },
 ];
 
@@ -127,6 +133,9 @@ function MovieListComponent(props) {
     const [orderBy, setOrderBy] = React.useState();
     const [order, setOrder] = React.useState();
 
+    const [page, setPage] = React.useState(0);
+    const [rowsPerPage, setRowsPerPage] = React.useState(5);
+
     const onRequestSort = (cellId, event) => {
         // if the current orderBy is also the clicked property then the direction of the sorting should be changed
         // otherwise the fist order direction is always ascending
@@ -135,6 +144,15 @@ function MovieListComponent(props) {
 
         // setting the called cell id as order by
         setOrderBy(cellId);
+    };
+
+    const onChangePage = (event, newPage) => {
+        setPage(newPage);
+    };
+
+    const onChangeRowsPerPage = (event) => {
+        setRowsPerPage(parseInt(event.target.value, 10));
+        setPage(0);
     };
 
     return (
@@ -155,7 +173,7 @@ function MovieListComponent(props) {
                     <Table>
                         <TableHead>
                             <TableRow>
-                                <TableCell>Picture</TableCell>
+                                <TableCell width="10%">Picture</TableCell>
                                 {sortableHeadCells.map((headCell, index) => (
                                     <SortableTableHeadCell
                                         key={index}
@@ -165,10 +183,11 @@ function MovieListComponent(props) {
                                         onRequestSort={() =>
                                             onRequestSort(headCell.id)
                                         }
+                                        width={headCell.width}
                                     />
                                 ))}
                                 {props.isAdmin ? (
-                                    <TableCell>Delete</TableCell>
+                                    <TableCell align="center">Delete</TableCell>
                                 ) : null}
                             </TableRow>
                         </TableHead>
@@ -176,76 +195,37 @@ function MovieListComponent(props) {
                             {stableSort(
                                 props.movies,
                                 getComparator(order, orderBy)
-                            ).map((movie, index) => {
-                                return (
-                                    <TableRow
-                                        key={index}
-                                        onClick={() =>
-                                            props.onClickDisplayMovie(movie._id)
-                                        }
-                                    >
-                                        <TableCell>
-                                            {movie.posters ? (
-                                                <img
-                                                    src={
-                                                        movie.posters.thumbnail
-                                                    }
-                                                    alt="Movie Thumbnail"
-                                                    className={classes.image}
-                                                />
-                                            ) : (
-                                                <ImageIcon />
-                                            )}
-                                        </TableCell>
-                                        <TableCell>
-                                            <Typography variant="h6">
-                                                {movie.title}
-                                            </Typography>
-                                        </TableCell>
-                                        <TableCell>
-                                            <Typography>
-                                                {movie.year === -1
-                                                    ? "No Release Year"
-                                                    : movie.year}
-                                            </Typography>
-                                        </TableCell>
-                                        <TableCell>
-                                            <Typography>
-                                                {movie.criticsRating === 0
-                                                    ? "No Critics Rating"
-                                                    : movie.criticsRating +
-                                                      " / 5"}
-                                            </Typography>
-                                        </TableCell>
-                                        <TableCell>
-                                            <Typography>
-                                                {movie.avgAudienceRating === 0
-                                                    ? "No Audience Rating"
-                                                    : movie.avgAudienceRating.toFixed(
-                                                          1
-                                                      ) + " / 5.0"}
-                                            </Typography>
-                                        </TableCell>
-                                        {props.isAdmin ? (
-                                            <TableCell>
-                                                <IconButton
-                                                    onClick={(e) => {
-                                                        e.stopPropagation();
-                                                        props.onClickDeleteMovie(
-                                                            movie._id
-                                                        );
-                                                    }}
-                                                >
-                                                    <DeleteIcon />
-                                                </IconButton>
-                                            </TableCell>
-                                        ) : null}
-                                    </TableRow>
-                                );
-                            })}
+                            )
+                                .slice(
+                                    page * rowsPerPage,
+                                    page * rowsPerPage + rowsPerPage
+                                )
+                                .map((movie) => {
+                                    return (
+                                        <MovieListRow
+                                            movie={movie}
+                                            onClickDisplayMovie={
+                                                props.onClickDisplayMovie
+                                            }
+                                            onClickDeleteMovie={
+                                                props.onClickDeleteMovie
+                                            }
+                                            isAdmin={props.isAdmin}
+                                        />
+                                    );
+                                })}
                         </TableBody>
                     </Table>
                 </TableContainer>
+                <TablePagination
+                    rowsPerPageOptions={[5, 10, 25]}
+                    component="div"
+                    count={props.movies.length}
+                    rowsPerPage={rowsPerPage}
+                    page={page}
+                    onChangePage={onChangePage}
+                    onChangeRowsPerPage={onChangeRowsPerPage}
+                />
             </Paper>
             {props.isAdmin ? (
                 <Button
