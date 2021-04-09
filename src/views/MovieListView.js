@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { connect, useSelector } from "react-redux";
 
 import { getMovies, deleteMovie } from "../redux/actions";
-import MovieListComponent from "../components/MovieListComponents";
+import MovieListComponent from "../components/MovieListComponent";
 import Loading from "../components/Loading";
 
 /**

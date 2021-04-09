@@ -1,18 +1,12 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import {
-    AppBar,
-    IconButton,
-    Link,
-    Toolbar,
-    Typography,
-} from "@material-ui/core";
+import { Link, Typography } from "@material-ui/core";
 import CopyrightIcon from "@material-ui/icons/Copyright";
 
 const useStyles = makeStyles((theme) => ({
     footerRoot: {
         display: "flex",
-        margin: "auto",
+        justifyContent: "center",
         paddingTop: theme.spacing(1),
         paddingBottom: theme.spacing(1),
     },

@@ -42,7 +42,10 @@ function MovieCast(props) {
                         ? props.movieCast.map((actor, index) => (
                               <TableRow key={index}>
                                   <TableCell>
-                                      <CustomTextField value={actor.name} />
+                                      <CustomTextField
+                                          value={actor.name}
+                                          isEmptyText="Actor"
+                                      />
                                   </TableCell>
                                   {actor.characters &&
                                   Array.isArray(actor.characters) ? (
@@ -51,6 +54,7 @@ function MovieCast(props) {
                                           <TableCell>
                                               <CustomTextField
                                                   value={actor.characters[0]}
+                                                  isEmptyText="a Role"
                                               />
                                           </TableCell>
                                       </React.Fragment>
@@ -60,28 +64,30 @@ function MovieCast(props) {
                                           <TableCell></TableCell>
                                       </React.Fragment>
                                   )}
-                                  <TableCell>
-                                      {props.editMode ? (
-                                          <IconButton
-                                              size="small"
-                                              onClick={() =>
-                                                  props.onRemoveCastMember(
-                                                      index
-                                                  )
-                                              }
-                                          >
-                                              <Delete />
-                                          </IconButton>
-                                      ) : (
-                                          <IconButton
-                                              size="small"
-                                              onClick={props.toggleEditMode}
-                                              disabled={!props.isLoggedIn}
-                                          >
-                                              <Edit />
-                                          </IconButton>
-                                      )}
-                                  </TableCell>
+                                  {props.isAdmin ? (
+                                      <TableCell>
+                                          {props.editMode ? (
+                                              <IconButton
+                                                  size="small"
+                                                  onClick={() =>
+                                                      props.onRemoveCastMember(
+                                                          index
+                                                      )
+                                                  }
+                                              >
+                                                  <Delete />
+                                              </IconButton>
+                                          ) : (
+                                              <IconButton
+                                                  size="small"
+                                                  onClick={props.toggleEditMode}
+                                                  disabled={!props.isLoggedIn}
+                                              >
+                                                  <Edit />
+                                              </IconButton>
+                                          )}
+                                      </TableCell>
+                                  ) : null}
                               </TableRow>
                           ))
                         : null}

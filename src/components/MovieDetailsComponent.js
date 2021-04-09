@@ -1,14 +1,6 @@
 import React, { useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import {
-    Button,
-    Grid,
-    Table,
-    TableBody,
-    TableCell,
-    TableRow,
-} from "@material-ui/core";
-import { Rating } from "@material-ui/lab";
+import { Button, Grid } from "@material-ui/core";
 import PropTypes from "prop-types";
 import CustomTextField from "../components/CustomTextField";
 import CustomChip from "../components/CustomChip";
@@ -18,6 +10,7 @@ import { withRouter } from "react-router-dom";
 import MovieService from "../services/MovieService";
 import ReleaseDates from "./ReleaseDates";
 import Ratings from "./Ratings";
+import Synopsis from "./Synopsis";
 
 const useStyles = makeStyles((theme) => ({
     flexCol: {
@@ -27,6 +20,9 @@ const useStyles = makeStyles((theme) => ({
     flexRow: {
         display: "flex",
         flexDirection: "row",
+    },
+    justifySpaceBetween: {
+        justifyContent: "space-between",
     },
     flex: {
         flex: 1,
@@ -44,6 +40,10 @@ const useStyles = makeStyles((theme) => ({
     padding: {
         padding: theme.spacing(2),
     },
+    maxWidth: {
+        width: "100%",
+        maxWidth: "1500px",
+    },
     pageArea: {
         paddingBottom: theme.spacing(2),
         "&:last-child": {
@@ -51,11 +51,13 @@ const useStyles = makeStyles((theme) => ({
         },
     },
     title: {
-        marginTop: theme.spacing(6),
-        marginBottom: theme.spacing(2),
+        marginTop: theme.spacing(4),
     },
     barMinHeight: {
         minHeight: theme.spacing(5),
+        position: "absolute",
+        top: theme.spacing(1),
+        right: theme.spacing(2),
     },
 }));
 
@@ -66,7 +68,7 @@ const useStyles = makeStyles((theme) => ({
 function MovieDetailsComponent(props) {
     const classes = useStyles();
 
-    const [movieTitle, setMovieTitle] = React.useState("");
+    const [movieTitle, setMovieTitle] = React.useState(" ");
     const [movieSynopsis, setMovieSynopsis] = React.useState("");
     const [movieCast, setMovieCast] = React.useState([]);
     const [movieAgeRating, setMovieAgeRating] = React.useState("");
@@ -74,9 +76,9 @@ function MovieDetailsComponent(props) {
     const [movieYear, setMovieYear] = React.useState("");
     const [criticsRating, setCriticsRating] = React.useState("");
     const [avgAudienceRating, setAvgAudienceRating] = React.useState("");
-    const [ownRating, setOwnRating] = React.useState("");
     const [theaterRelease, setTheaterRelease] = React.useState("");
     const [blurayRelase, setBlurayRelease] = React.useState("");
+    const [moviethumbnail, setMovieThumbnail] = React.useState("");
 
     // for extracting the attributes of the given movie to the approriate state variables
     const extractMovie = () => {
@@ -92,10 +94,10 @@ function MovieDetailsComponent(props) {
         setMovieCast(JSON.parse(JSON.stringify(props.movie.actors)));
         setCriticsRating(props.movie.criticsRating);
         setAvgAudienceRating(props.movie.avgAudienceRating);
-        setOwnRating(props.movie.ownRating);
         setTheaterRelease(props.movie.theaterRelease);
         setBlurayRelease(props.movie.blurayRelease);
         setMovieYear(props.movie.year);
+        setMovieThumbnail(props.movie.thumbnail);
     };
 
     // creating a object with all relevant data to update or create a changed movie
@@ -113,6 +115,7 @@ function MovieDetailsComponent(props) {
         back.blurayRelease = blurayRelase;
         back.criticsRating = criticsRating;
         back.actors = movieCast;
+        back.thumbnail = moviethumbnail;
 
         return back;
     };
@@ -157,6 +160,10 @@ function MovieDetailsComponent(props) {
 
     const onChangeAgeRating = (value) => {
         setMovieAgeRating(value);
+    };
+
+    const onChangeThumbnail = (value) => {
+        setMovieThumbnail(value);
     };
 
     const onChangeOwnRating = async (value) => {
@@ -213,7 +220,9 @@ function MovieDetailsComponent(props) {
                 " " +
                 classes.center +
                 " " +
-                classes.flex
+                classes.flex +
+                " " +
+                classes.maxWidth
             }
         >
             {/* Admin Buttons */}
@@ -271,7 +280,7 @@ function MovieDetailsComponent(props) {
                         fullWidth: true,
                     }}
                     align="center"
-                    variant="h4"
+                    variant="h2"
                     onChange={onChangeTitle}
                 />
             </div>
@@ -362,14 +371,12 @@ function MovieDetailsComponent(props) {
                     <DetailsArea
                         title="Synopsis"
                         content={
-                            <CustomTextField
-                                value={movieSynopsis}
+                            <Synopsis
                                 editMode={editMode}
-                                furtherProps={{
-                                    multiline: true,
-                                    fullWidth: true,
-                                }}
-                                onChange={onChangeSynopsis}
+                                movieSynopsis={movieSynopsis}
+                                moviethumbnail={moviethumbnail}
+                                onChangeThumbnail={onChangeThumbnail}
+                                onChangeSynopsis={onChangeSynopsis}
                             />
                         }
                     />
@@ -387,6 +394,7 @@ function MovieDetailsComponent(props) {
                                 onAddCastMember={onAddCastMember}
                                 onRemoveCastMember={onRemoveCastMember}
                                 isLoggedIn={props.isLoggedIn}
+                                isAdmin={props.isAdmin}
                             />
                         }
                     />
