@@ -30,6 +30,7 @@ const useStyles = makeStyles((theme) => ({
     image: {
         borderRadius: theme.shape.borderRadius,
         boxShadow: theme.shadows[2],
+        maxWidth: 54,
     },
 }));
 
@@ -100,6 +101,7 @@ function Synopsis(props) {
                 <img
                     src={props.moviethumbnail}
                     className={classes.margin + " " + classes.image}
+                    alt="Movie Thumbnail"
                 />
             </div>
             <CustomTextField

@@ -1,5 +1,4 @@
 import React, { useEffect } from "react";
-import { withRouter } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import {
     Paper,
@@ -9,9 +8,6 @@ import {
     FormControlLabel,
     Checkbox,
 } from "@material-ui/core";
-import { connect, useSelector } from "react-redux";
-
-import { register } from "../redux/actions";
 
 const useStyles = makeStyles((theme) => ({
     usersignUpRoot: {
@@ -161,7 +157,6 @@ function SignUpComponent(props) {
                         variant="contained"
                         color="primary"
                         onClick={onRegister}
-                        disabled={registerError !== ""}
                         disabled={
                             username === "" ||
                             password === "" ||

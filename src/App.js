@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { Route, Switch } from "react-router-dom";
 import { Provider } from "react-redux";
 import { createStore, applyMiddleware } from "redux";
 import thunkMiddleware from "redux-thunk";
@@ -29,15 +29,18 @@ const useStyles = makeStyles((theme) => ({
 function App() {
     const classes = useStyles();
 
-    const [theme, setTheme] = React.useState(AppTheme.LIGHT);
-
-    //const theme = createMuiTheme({});
-    const store = createStore(reducers, applyMiddleware(thunkMiddleware));
-
+    // set document title
     useEffect(() => {
         document.title = "Movie Database App";
     }, []);
 
+    // create store for redux
+    const store = createStore(reducers, applyMiddleware(thunkMiddleware));
+
+    // theme for app
+    const [theme, setTheme] = React.useState(AppTheme.LIGHT);
+
+    // toggle theme
     const toggleTheme = () => {
         setTheme(theme === AppTheme.LIGHT ? AppTheme.DARK : AppTheme.LIGHT);
     };

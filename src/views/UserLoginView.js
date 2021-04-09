@@ -16,7 +16,7 @@ function UserLoginView(props) {
         if (user.user) {
             props.history.push("/");
         }
-    }, [user]);
+    }, [user, props.history]);
 
     const onLogin = (username, password) => {
         props.dispatch(login(username, password));

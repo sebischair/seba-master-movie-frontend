@@ -46,9 +46,8 @@ function CustomTextField(props) {
 
     return (
         <div className={classes.customtextfieldroot}>
-            {props.value === "" ||
-            !props.value ||
-            (props.value === null && !props.editMode) ? (
+            {(props.value === "" || !props.value || props.value === null) &&
+            !props.editMode ? (
                 // if no value is given return the given text
                 <TextField
                     value={props.isEmptyText}
@@ -114,7 +113,6 @@ function CustomTextField(props) {
                             props.onChange ? props.onChange(date) : null
                         }
                         invalidDateMessage=""
-                        //onChange={onChangeDate}
                         KeyboardButtonProps={{
                             "aria-label": "change date",
                         }}

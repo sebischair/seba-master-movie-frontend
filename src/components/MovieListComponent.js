@@ -3,7 +3,6 @@ import { makeStyles } from "@material-ui/core/styles";
 import {
     Button,
     Divider,
-    IconButton,
     Paper,
     Table,
     TableBody,
@@ -23,6 +22,7 @@ import MovieListRow from "./MovieListRow";
 const useStyles = makeStyles((theme) => ({
     movieListRoot: {
         padding: theme.spacing(2),
+        flex: 1,
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
@@ -50,9 +50,11 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
+/**
+ * header cells for sortable table columns
+ * @param {props} props
+ */
 function SortableTableHeadCell(props) {
-    const classes = useStyles();
-
     const { headCell, order, orderBy, onRequestSort } = props;
 
     return (
@@ -73,6 +75,7 @@ function SortableTableHeadCell(props) {
     );
 }
 
+// data for sortable table columns
 const sortableHeadCells = [
     {
         id: "title",
@@ -96,6 +99,13 @@ const sortableHeadCells = [
     },
 ];
 
+/**
+ * Comparator for two objects on a generic property
+ * @param {compare object a} a
+ * @param {compare object b} b
+ * @param {order by property name} orderBy
+ * @returns 1 when b > a, -1 when a < b
+ */
 function descendingComparator(a, b, orderBy) {
     if (b[orderBy] < a[orderBy]) {
         return -1;
@@ -106,17 +116,33 @@ function descendingComparator(a, b, orderBy) {
     return 0;
 }
 
+/**
+ * Get comparator for sorting table
+ * @param {asc or desc} order
+ * @param {order by propoerty name} orderBy
+ * @returns function that compares two objects
+ */
 function getComparator(order, orderBy) {
     return order === "desc"
         ? (a, b) => descendingComparator(a, b, orderBy)
         : (a, b) => -descendingComparator(a, b, orderBy);
 }
 
+/**
+ * Sort array with respect to the initial order of the objects
+ * @param {to sort array} array
+ * @param {comparator for sorting} comparator
+ * @returns sorted array
+ */
 function stableSort(array, comparator) {
+    // include index into the to sortable array objects
     const stabilizedThis = array.map((el, index) => [el, index]);
+    // sort the array
     stabilizedThis.sort((a, b) => {
+        // compare two array objects a[0] or b[0] refer to the original element of the list a[1] or b[1] would be the initial index
         const order = comparator(a[0], b[0]);
         if (order !== 0) return order;
+        // if both objects have the same property value in the order by property, their initial order in the array is maintained
         return a[1] - b[1];
     });
     return stabilizedThis.map((el) => el[0]);
@@ -200,9 +226,10 @@ function MovieListComponent(props) {
                                     page * rowsPerPage,
                                     page * rowsPerPage + rowsPerPage
                                 )
-                                .map((movie) => {
+                                .map((movie, index) => {
                                     return (
                                         <MovieListRow
+                                            key={index}
                                             movie={movie}
                                             onClickDisplayMovie={
                                                 props.onClickDisplayMovie

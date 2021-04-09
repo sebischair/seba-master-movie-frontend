@@ -24,7 +24,7 @@ export default class MovieService {
             HttpService.get(
                 `${MovieService.baseURL()}/${id}`,
                 function (data) {
-                    if (data != undefined || Object.keys(data).length !== 0) {
+                    if (data !== undefined || Object.keys(data).length !== 0) {
                         resolve(data);
                     } else {
                         reject("Error while retrieving movie");
@@ -42,7 +42,7 @@ export default class MovieService {
             HttpService.remove(
                 `${MovieService.baseURL()}/${id}`,
                 function (data) {
-                    if (data.message != undefined) {
+                    if (data.message !== undefined) {
                         resolve(data.message);
                     } else {
                         reject("Error while deleting");

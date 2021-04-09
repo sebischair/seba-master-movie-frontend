@@ -12,6 +12,7 @@ const useStyles = makeStyles((theme) => ({
     image: {
         borderRadius: theme.shape.borderRadius,
         boxShadow: theme.shadows[2],
+        maxWidth: 54,
     },
 }));
 
@@ -30,9 +31,9 @@ function MovieListRow(props) {
             height="118px"
         >
             <TableCell>
-                {props.movie.posters ? (
+                {props.movie.thumbnail ? (
                     <img
-                        src={props.movie.posters.thumbnail}
+                        src={props.movie.thumbnail}
                         alt="Movie Thumbnail"
                         className={classes.image}
                     />

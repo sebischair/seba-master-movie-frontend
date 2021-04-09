@@ -25,17 +25,23 @@ function KebabMenu(props) {
     const classes = useStyles();
 
     const user = useSelector((state) => {
+        // return the currnetly logged in user from redux store
         return state.user;
     });
 
     const onClickLogin = () => {
-        props.history.push("/login");
+        // close this menu
         props.onClose();
+        // navigate to the login page
+        props.history.push("/login");
     };
 
     const onClickLogout = () => {
+        // trigger redux logout action
         props.dispatch(logout());
+        // close this menu
         props.onClose();
+        // navigate to the home page
         props.history.push("/");
     };
 

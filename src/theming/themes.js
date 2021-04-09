@@ -1,12 +1,4 @@
 import { AppTheme } from "./themetypes";
-import {
-    grey,
-    red,
-    blue,
-    green,
-    yellow,
-    black,
-} from "@material-ui/core/colors";
 
 const themeindependent = {
     mixins: {

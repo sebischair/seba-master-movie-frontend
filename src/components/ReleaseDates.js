@@ -1,18 +1,13 @@
 import React from "react";
-import { makeStyles } from "@material-ui/core/styles";
 import { Table, TableBody, TableCell, TableRow } from "@material-ui/core";
 import PropTypes from "prop-types";
 import CustomTextField from "../components/CustomTextField";
-
-const useStyles = makeStyles((theme) => ({}));
 
 /**
  * For presenting and changing movie details
  * @param {props} props
  */
 function ReleaseDates(props) {
-    const classes = useStyles();
-
     return (
         <Table>
             <TableBody>

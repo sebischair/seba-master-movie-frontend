@@ -76,7 +76,6 @@ function MovieDetailsComponent(props) {
     const [movieYear, setMovieYear] = React.useState("");
     const [criticsRating, setCriticsRating] = React.useState("");
     const [avgAudienceRating, setAvgAudienceRating] = React.useState("");
-    const [ownRating, setOwnRating] = React.useState("");
     const [theaterRelease, setTheaterRelease] = React.useState("");
     const [blurayRelase, setBlurayRelease] = React.useState("");
     const [moviethumbnail, setMovieThumbnail] = React.useState("");
@@ -95,7 +94,6 @@ function MovieDetailsComponent(props) {
         setMovieCast(JSON.parse(JSON.stringify(props.movie.actors)));
         setCriticsRating(props.movie.criticsRating);
         setAvgAudienceRating(props.movie.avgAudienceRating);
-        setOwnRating(props.movie.ownRating);
         setTheaterRelease(props.movie.theaterRelease);
         setBlurayRelease(props.movie.blurayRelease);
         setMovieYear(props.movie.year);

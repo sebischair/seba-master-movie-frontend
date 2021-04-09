@@ -10,6 +10,9 @@ import Loading from "../components/Loading";
  * @param {props} props
  */
 function MovieDetailsView(props) {
+    // props can be deconstructed into single variables, so you do not need to write "props." all the time
+    let { match, getMovie } = props;
+
     // from redux store
     const selectedMovie = useSelector((state) => state.selectedMovie);
     const user = useSelector((state) => state.user);
@@ -19,7 +22,7 @@ function MovieDetailsView(props) {
 
     useEffect(() => {
         // get id of movie from URL
-        let movieId = props.match.params.id;
+        let movieId = match.params.id;
 
         // check if a new movie is created
         if (movieId === "new") {
@@ -27,9 +30,9 @@ function MovieDetailsView(props) {
             setNewMovie(true);
         } else {
             // trigger movie load from backend
-            props.getMovie(movieId);
+            getMovie(movieId);
         }
-    }, [props.match.params]);
+    }, [match.params]);
 
     // for saving an existing movie
     const onSave = (movie) => {

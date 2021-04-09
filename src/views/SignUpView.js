@@ -17,7 +17,7 @@ function SignUpView(props) {
         if (user.user) {
             props.history.push("/");
         }
-    }, [user]);
+    }, [user, props.history]);
 
     const onRegister = (username, password, isAdmin) => {
         props.dispatch(register(username, password, isAdmin));
