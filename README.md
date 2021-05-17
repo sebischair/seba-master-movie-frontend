@@ -16,18 +16,18 @@ To get you started you can simply clone the [seba-master-movie-frontend](https:/
 
 You need git to clone the [seba-master-movie-frontend](https://github.com/sebischair/seba-master-movie-frontend/) repository. You can get git from [http://git-scm.com/](http://git-scm.com/).
 
-We also use a number of node.js tools to initialize and test [seba-master-movie-frontend](https://github.com/sebischair/sebamaster-movie-frontend/) . You must have node.js and its package manager (npm) installed. You can get them from [http://nodejs.org/](http://nodejs.org/).
+We also use a number of node.js tools to initialize and test [seba-master-movie-frontend](https://github.com/sebischair/seba-master-movie-frontend/) . You must have node.js and its package manager (npm) installed. You can get them from [http://nodejs.org/](http://nodejs.org/).
 
 ### Clone Movie Project
 
-Clone the [sebamaster-movie-frontend](https://github.com/sebischair/seba-master-movie-frontend/) repository using [git](http://git-scm.com/):
+Clone the [seba-master-movie-frontend](https://github.com/sebischair/seba-master-movie-frontend/) repository using [git](http://git-scm.com/):
 
 ```
 git clone https://github.com/sebischair/seba-master-movie-frontend.git
 cd seba-master-movie-frontend
 ```
 
-If you just want to start a new project without the [sebamaster-movie-frontend](https://github.com/sebischair/seba-master-movie-frontend/) commit history then you can do:
+If you just want to start a new project without the [seba-master-movie-frontend](https://github.com/sebischair/seba-master-movie-frontend/) commit history then you can do:
 
 ```bash
 git clone --depth=1 https://github.com/sebischair/seba-master-movie-frontend.git <your-project-name>
