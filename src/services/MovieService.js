@@ -2,7 +2,7 @@ import HttpService from "./HttpService";
 
 export default class MovieService {
     static baseURL() {
-        return "http://localhost:3000/movies";
+        return "http://localhost:4000/movies";
     }
 
     static getMovies() {

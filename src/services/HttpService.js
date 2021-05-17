@@ -1,8 +1,4 @@
 export default class HttpService {
-    static apiURL() {
-        return "http://localhost:3000";
-    }
-
     static extractUser(token) {
         let base64Url = token.split(".")[1];
         let base64 = base64Url.replace("-", "+").replace("_", "/");
