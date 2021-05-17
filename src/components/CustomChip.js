@@ -50,8 +50,7 @@ CustomChip.propTypes = {
     suffix: PropTypes.string,
     editMode: PropTypes.bool,
     onChange: PropTypes.func,
-    content: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
-        .isRequired,
+    content: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     caption: PropTypes.string.isRequired,
 };
 
