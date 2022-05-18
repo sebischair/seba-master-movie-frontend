@@ -4,6 +4,7 @@ import { connect, useSelector } from "react-redux";
 import { getMovies, deleteMovie } from "../redux/actions";
 import MovieListComponent from "../components/MovieListComponent";
 import Loading from "../components/Loading";
+import { useNavigate } from "react-router-dom";
 
 /**
  * Manages the process of getting movie list data
@@ -13,6 +14,7 @@ function MovieListView(props) {
     // state from the redux store
     const movies = useSelector((state) => state.entities.movies);
     const user = useSelector((state) => state.user);
+    const navigate = useNavigate();
 
     useEffect(() => {
         // load movies when the page is loaded or the movies have changed.
@@ -33,12 +35,12 @@ function MovieListView(props) {
 
     const onClickDisplayMovie = (id) => {
         // navigate to details of the selected movie
-        props.history.push("/movie/" + id);
+        navigate("/movie/" + id);
     };
 
     const onAddMovie = () => {
         // navigate to an empty mask for entering details of the new movie
-        props.history.push("/movie/new");
+        navigate("/movie/new");
     };
 
     return !movies ? (

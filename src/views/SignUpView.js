@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { withRouter } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { connect, useSelector } from "react-redux";
 
 import SignUpComponent from "../components/SignUpComponent";
@@ -13,9 +13,11 @@ import { register } from "../redux/actions";
 function SignUpView(props) {
     const user = useSelector((state) => state.user);
 
+    const navigate = useNavigate();
+
     useEffect(() => {
         if (user.user) {
-            props.history.push("/");
+            navigate("/");
         }
     }, [user, props.history]);
 
@@ -24,7 +26,7 @@ function SignUpView(props) {
     };
 
     const onCancel = () => {
-        props.history.push("/");
+        navigate("/");
     };
 
     return (
@@ -36,4 +38,4 @@ function SignUpView(props) {
     );
 }
 
-export default connect()(withRouter(SignUpView));
+export default connect()(SignUpView);

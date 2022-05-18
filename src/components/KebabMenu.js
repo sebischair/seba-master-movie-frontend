@@ -1,7 +1,7 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import PropTypes from "prop-types";
-import { withRouter } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { logout } from "../redux/actions";
 import { Menu, MenuItem, Avatar, Divider } from "@material-ui/core";
 import { connect, useSelector } from "react-redux";
@@ -23,6 +23,7 @@ const useStyles = makeStyles((theme) => ({
  */
 function KebabMenu(props) {
     const classes = useStyles();
+    const navigate = useNavigate();
 
     const user = useSelector((state) => {
         // return the currnetly logged in user from redux store
@@ -33,7 +34,7 @@ function KebabMenu(props) {
         // close this menu
         props.onClose();
         // navigate to the login page
-        props.history.push("/login");
+        navigate("/login");
     };
 
     const onClickLogout = () => {
@@ -42,7 +43,7 @@ function KebabMenu(props) {
         // close this menu
         props.onClose();
         // navigate to the home page
-        props.history.push("/");
+        navigate("/");
     };
 
     return (
@@ -91,8 +92,8 @@ function KebabMenu(props) {
 // attributes of props and their type
 KebabMenu.propTypes = {
     onClose: PropTypes.func.isRequired,
-    anchor: PropTypes.element,
+    anchor: PropTypes.object,
     open: PropTypes.bool.isRequired,
 };
 
-export default connect()(withRouter(KebabMenu));
+export default connect()(KebabMenu);

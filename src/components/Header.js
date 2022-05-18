@@ -1,5 +1,5 @@
 import React from "react";
-import { withRouter } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import { AppBar, IconButton, Toolbar, Typography } from "@material-ui/core";
 
@@ -27,10 +27,11 @@ const useStyles = makeStyles((theme) => ({
  */
 function Header(props) {
     const classes = useStyles();
+    const navigate = useNavigate();
 
     const [menuAnchor, setMenuAnchor] = React.useState(null);
 
-    const onClickGithub = (event) => {
+    const onClickGithub = () => {
         var win = window.open(
             "https://github.com/sebischair/seba-master-movie-frontend",
             "_blank"
@@ -48,7 +49,7 @@ function Header(props) {
             <Toolbar className={classes.toolbar}>
                 <LocalMoviesIcon
                     fontSize="large"
-                    onClick={() => props.history.push("/")}
+                    onClick={() => navigate("/")}
                 />
                 <Typography
                     className={classes.title}
@@ -74,4 +75,4 @@ function Header(props) {
     );
 }
 
-export default withRouter(Header);
+export default Header;

@@ -6,7 +6,7 @@ import CustomTextField from "../components/CustomTextField";
 import CustomChip from "../components/CustomChip";
 import DetailsArea from "../components/DetailsArea";
 import MovieCast from "./MovieCast";
-import { withRouter } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import MovieService from "../services/MovieService";
 import ReleaseDates from "./ReleaseDates";
 import Ratings from "./Ratings";
@@ -67,6 +67,7 @@ const useStyles = makeStyles((theme) => ({
  */
 function MovieDetailsComponent(props) {
     const classes = useStyles();
+    const navigate = useNavigate();
 
     const [movieTitle, setMovieTitle] = React.useState(" ");
     const [movieSynopsis, setMovieSynopsis] = React.useState("");
@@ -194,7 +195,7 @@ function MovieDetailsComponent(props) {
     // cancel is called, functionality differs whether it is a new movie or not
     const onCancel = () => {
         if (props.new) {
-            props.history.push("/");
+            navigate("/");
         } else {
             setEditMode(false);
             extractMovie();
@@ -413,4 +414,4 @@ MovieDetailsComponent.propTypes = {
 };
 
 // withRouter() allows accsing the necessary functionality to navigate from this component
-export default withRouter(MovieDetailsComponent);
+export default MovieDetailsComponent;

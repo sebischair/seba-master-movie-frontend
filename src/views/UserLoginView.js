@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { withRouter } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { connect, useSelector } from "react-redux";
 import LoginComponent from "../components/UserLoginComponent";
 
@@ -12,22 +12,24 @@ import { login } from "../redux/actions";
 function UserLoginView(props) {
     const user = useSelector((state) => state.user);
 
+    const navigate = useNavigate();
+
     useEffect(() => {
         if (user.user) {
-            props.history.push("/");
+            navigate("/");
         }
-    }, [user, props.history]);
+    }, [user]);
 
     const onLogin = (username, password) => {
         props.dispatch(login(username, password));
     };
 
     const onCancel = () => {
-        props.history.push("/");
+        navigate("/");
     };
 
     const onSignUp = () => {
-        props.history.push("/register");
+        navigate("/register");
     };
 
     return (
@@ -40,4 +42,4 @@ function UserLoginView(props) {
     );
 }
 
-export default connect()(withRouter(UserLoginView));
+export default connect()(UserLoginView);
